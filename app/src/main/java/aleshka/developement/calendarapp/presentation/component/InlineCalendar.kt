@@ -1,11 +1,9 @@
-package aleshka.developement.calendarapp.component
+package aleshka.developement.calendarapp.presentation.component
 
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
@@ -17,50 +15,45 @@ import com.mabn.calendarlibrary.component.CalendarPager
 import com.mabn.calendarlibrary.core.CalendarTheme
 import com.mabn.calendarlibrary.utils.dayViewModifier
 import java.time.LocalDate
-import java.time.YearMonth
 
-@OptIn(ExperimentalLayoutApi::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-internal fun MonthViewCalendar(
+internal fun InlineCalendar(
     loadedDates: Array<List<LocalDate>>,
     selectedDate: LocalDate,
     theme: CalendarTheme,
-    currentMonth: YearMonth,
-    loadDatesForMonth: (YearMonth) -> Unit,
+    loadNextWeek: (nextWeekDate: LocalDate) -> Unit,
+    loadPrevWeek: (endWeekDate: LocalDate) -> Unit,
     onDayClick: (LocalDate) -> Unit
 ) {
+
+    /*
+        it shows when calendar is collapsed
+    */
 
     val itemWidth = LocalConfiguration.current.screenWidthDp / 7
 
     CalendarPager(
         loadedDates = loadedDates,
-        loadNextDates = { loadDatesForMonth(currentMonth) },
-        loadPrevDates = { loadDatesForMonth(currentMonth.minusMonths(2)) } // why 2
+        loadNextDates = loadNextWeek,
+        loadPrevDates = loadPrevWeek
     ) { currentPage ->
-
-        FlowRow(
-            Modifier.height(400.dp)) {
-                loadedDates[currentPage].forEachIndexed { index, date ->
-
+        Row {
+            loadedDates[currentPage]
+                .forEach { date ->
                     Box(
-                        Modifier
+                        modifier = Modifier
                             .width(itemWidth.dp)
                             .padding(5.dp),
                         contentAlignment = Alignment.Center
                     ) {
+
                         DayView(
                             date,
                             theme = theme,
                             isSelected = selectedDate == date,
-                            onDayClick = {
-                                onDayClick(date)
-                            },
-                            // if index less then 7,
-                            // it means that we should show weekDay
-                            weekDayLabel = index < 7,
-                            modifier = Modifier
-                                .dayViewModifier(date, currentMonth, monthView = true),
+                            onDayClick = onDayClick,
+                            modifier = Modifier.dayViewModifier(date)
                         )
                     }
                 }

@@ -1,6 +1,7 @@
 package aleshka.developement.calendarapp
 
-import aleshka.developement.calendarapp.ui.theme.CalendarAppTheme
+import aleshka.developement.calendarapp.presentation.component.ExpandableCalendar
+import aleshka.developement.calendarapp.presentation.theme.CalendarAppTheme
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -37,16 +38,6 @@ class MainActivity : ComponentActivity() {
 
                     ExpandableCalendar (
                         theme = calendarDefaultTheme.copy(
-
-                            /**
-                            * @param dayShape - to set shape
-                            * @param backgroundColor - to set background color of the calendar
-                            * @param selectedDayBackgroundColor - to set background color of the chosen day
-                            * @param dayValueTextColor - to set text color of the day
-                            * @param selectedDayValueTextColor - to set text color of chosen day
-                            * @param headerTextColor - to set text color of the title
-                            * @param weekDaysTextColor - to set text color of the weekdays*/
-
                             dayShape = RoundedCornerShape(20.dp),
                             backgroundColor = Color.White,
                             selectedDayBackgroundColor = Color.Blue,

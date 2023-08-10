@@ -1,4 +1,4 @@
-package aleshka.developement.calendarapp
+package aleshka.developement.calendarapp.view_models
 
 import android.os.Build
 import androidx.annotation.RequiresApi

@@ -1,4 +1,4 @@
-package aleshka.developement.calendarapp.ui.theme
+package aleshka.developement.calendarapp.presentation.theme
 
 import android.app.Activity
 import android.os.Build

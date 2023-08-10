@@ -1,5 +1,6 @@
-package aleshka.developement.calendarapp
+package aleshka.developement.calendarapp.presentation.component
 
+import aleshka.developement.calendarapp.view_models.CalendarViewModel
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateContentSize
@@ -10,10 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import aleshka.developement.calendarapp.component.InlineCalendar
 import com.mabn.calendarlibrary.component.MonthText
-import aleshka.developement.calendarapp.component.MonthViewCalendar
-import aleshka.developement.calendarapp.component.ToggleExpandCalendarButton
 import com.mabn.calendarlibrary.core.CalendarIntent
 import com.mabn.calendarlibrary.core.CalendarTheme
 import com.mabn.calendarlibrary.core.Period
@@ -22,6 +20,16 @@ import com.mabn.calendarlibrary.utils.getWeekStartDate
 import java.time.LocalDate
 import java.time.YearMonth
 import androidx.lifecycle.viewmodel.compose.viewModel
+
+/**
+ * @param dayShape - to set shape
+ * @param backgroundColor - to set background color of the calendar
+ * @param selectedDayBackgroundColor - to set background color of the chosen day
+ * @param dayValueTextColor - to set text color of the day
+ * @param selectedDayValueTextColor - to set text color of chosen day
+ * @param headerTextColor - to set text color of the title
+ * @param weekDaysTextColor - to set text color of the weekdays
+ * */
 
 @Composable
 @RequiresApi(Build.VERSION_CODES.O)

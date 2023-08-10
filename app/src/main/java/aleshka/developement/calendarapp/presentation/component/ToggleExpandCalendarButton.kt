@@ -1,4 +1,4 @@
-package aleshka.developement.calendarapp.component
+package aleshka.developement.calendarapp.presentation.component
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
