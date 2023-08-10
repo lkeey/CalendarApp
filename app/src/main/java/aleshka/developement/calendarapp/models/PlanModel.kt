@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 )
 data class PlanModel(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Int? = null,
     val title: String,
     val date: String
 )
