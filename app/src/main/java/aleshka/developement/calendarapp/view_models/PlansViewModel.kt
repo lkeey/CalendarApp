@@ -6,10 +6,6 @@ import aleshka.developement.calendarapp.events.Event
 import aleshka.developement.calendarapp.models.PlanModel
 import aleshka.developement.calendarapp.repositories.PlansRepository
 import android.content.Context
-import android.util.Log
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -93,18 +89,6 @@ class PlansViewModel (
                 }
             }
         }
-    }
-
-    init {
-        Log.i(TAG, "started 1")
-        getPlans()
-    }
-
-     fun getPlans() {
-         Log.i(TAG, "started 2")
-
-         val response = repository.getPlans()
-//         _plans.value = response.
     }
 
 
