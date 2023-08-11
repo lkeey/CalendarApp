@@ -9,6 +9,9 @@ class PlansRepository (
     fun getPlans()
         = database.getPlansDao().getPlans()
 
-    suspend fun addPlans(plan: PlanModel)
+    suspend fun addPlan(plan: PlanModel)
         = database.getPlansDao().addPlan(plan)
+
+    suspend fun deletePlan(plan: PlanModel)
+            = database.getPlansDao().deletePlan(plan)
 }
