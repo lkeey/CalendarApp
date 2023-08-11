@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [PlanModel::class],
-    version = 2
+    version = 3
 )
 abstract class PlansDatabase : RoomDatabase() {
     abstract fun getPlansDao() : PlansDao
