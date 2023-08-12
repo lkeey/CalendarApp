@@ -1,4 +1,4 @@
-package aleshka.developement.calendarapp.States
+package aleshka.developement.calendarapp.states
 
 import aleshka.developement.calendarapp.models.PlanModel
 

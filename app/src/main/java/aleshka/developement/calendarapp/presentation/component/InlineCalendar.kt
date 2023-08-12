@@ -1,6 +1,6 @@
 package aleshka.developement.calendarapp.presentation.component
 
-import aleshka.developement.calendarapp.States.PlanState
+import aleshka.developement.calendarapp.states.PlanState
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box

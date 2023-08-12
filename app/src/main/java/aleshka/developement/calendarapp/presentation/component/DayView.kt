@@ -1,15 +1,20 @@
 package aleshka.developement.calendarapp.presentation.component
 
-import aleshka.developement.calendarapp.States.PlanState
+import aleshka.developement.calendarapp.states.PlanState
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -77,8 +82,8 @@ fun DayView(
         modifier = Modifier
             .heightIn(max =
                 if (weekDayLabel) {
-                    50.dp + 50.dp
-                } else 50.dp
+                    70.dp + 50.dp
+                } else 70.dp
             )
             .widthIn(max = 50.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -98,22 +103,22 @@ fun DayView(
             )
         }
 
-        Text (
-//            ${state.plans.getOrNull(0)?.date}
-            text = "${toDos}"
-        )
+//        Text (
+//            text = "${toDos}"
+//        )
 
-        Box(
-            dayValueModifier
-                .padding(5.dp)
-                .aspectRatio(1f)
+        Column(
+            modifier = Modifier
                 .clickable {
                     onDayClick(date)
                 },
-            contentAlignment = Alignment.Center
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                date.dayOfMonth.toString(),
+
+            Text (
+                modifier = dayValueModifier
+                    .padding(5.dp),
+                text = date.dayOfMonth.toString(),
                 fontWeight = FontWeight.Bold,
                 fontSize = 25.sp,
                 textAlign = TextAlign.Center,
@@ -124,6 +129,21 @@ fun DayView(
                         theme.dayValueTextColor
                     }
             )
+
+            toDos.forEach {
+                Box (
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .clip(CircleShape)
+                        .background(
+                            Color(0xFF3579F8),
+                            shape = RoundedCornerShape(size = 100.dp)
+                        )
+                        .height(12.dp)
+                        .size(24.dp)
+                        .animateContentSize()
+                )
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 package aleshka.developement.calendarapp.presentation.screens
 
-import aleshka.developement.calendarapp.States.PlanState
+import aleshka.developement.calendarapp.states.PlanState
 import aleshka.developement.calendarapp.events.Event
 import aleshka.developement.calendarapp.presentation.component.ExpandableCalendar
 import aleshka.developement.calendarapp.presentation.theme.CalendarAppTheme
@@ -41,7 +41,6 @@ import java.time.LocalDate
 fun TestScreen (
     state: PlanState,
     onEvent: (Event) -> Unit,
-    onShowChanged: (Boolean) -> Unit
 ) {
     CalendarAppTheme {
 
@@ -54,8 +53,8 @@ fun TestScreen (
                 FloatingActionButton(
                     onClick = {
                         onEvent(Event.ShowCreatingSheet)
-                        onShowChanged(true)
-                    }) {
+                    }
+                ) {
                     Icon(
                         imageVector = Icons.Default.Add,
                         contentDescription = "add plan"
@@ -117,7 +116,7 @@ fun TestScreen (
                         contentAlignment = Alignment.Center,
                         modifier = Modifier
                             .fillMaxSize()) {
-                        Text("Selected date: ${currentDate.value}")
+                        Text("Selected date: ${currentDate.value} / ${state.isAddingPlan}")
                     }
                 }
             }

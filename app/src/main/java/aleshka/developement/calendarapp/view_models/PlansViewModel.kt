@@ -1,6 +1,6 @@
 package aleshka.developement.calendarapp.view_models
 
-import aleshka.developement.calendarapp.States.PlanState
+import aleshka.developement.calendarapp.states.PlanState
 import aleshka.developement.calendarapp.data.database.PlansDatabase
 import aleshka.developement.calendarapp.events.Event
 import aleshka.developement.calendarapp.models.PlanModel
@@ -29,7 +29,9 @@ class PlansViewModel (
 
     private val _plans = repository.getPlans()
 
-    private val _state = MutableStateFlow(PlanState())
+    private val _state = MutableStateFlow(
+        PlanState()
+    )
     val state = combine(_state, _plans) { state, plans ->
         state.copy(
             plans = plans
@@ -75,6 +77,12 @@ class PlansViewModel (
                         date = ""
                     )
                 }
+
+                _state.update {
+                    it.copy(
+                        isAddingPlan = false
+                    )
+                }
             }
             is Event.OnDateUpdated -> {
                 _state.update {
@@ -105,11 +113,9 @@ class PlansViewModel (
             }
             Event.ShowCreatingSheet -> {
                 _state.update {
-
                     it.copy(
                         isAddingPlan = true
                     )
-
                 }
 
                 Log.i(TAG, "isAdding - ${_state.value.isAddingPlan}")

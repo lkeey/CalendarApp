@@ -46,9 +46,11 @@ fun CalendarInput(
     CalendarDialog(
         state = calendarState,
         selection = CalendarSelection.Date {
-            val objects = it.toString().split("-")
+//            val objects = it.toString().split("-")
+//
+//            textValue.value = "${objects[2]}.${objects[1]}.${objects[0]}"
 
-            textValue.value = "${objects[2]}.${objects[1]}.${objects[0]}"
+            textValue.value = it.toString()
 
             onTextChanged(textValue.value)
         },

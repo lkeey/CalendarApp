@@ -1,7 +1,7 @@
 package aleshka.developement.calendarapp.presentation.component
 
-import aleshka.developement.calendarapp.States.PlanState
 import aleshka.developement.calendarapp.events.Event
+import aleshka.developement.calendarapp.states.PlanState
 import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -48,12 +48,19 @@ fun CreatePlan (
 
         Spacer(modifier = Modifier.height(8.dp))
 
+        ListDropDown(
+
+        ) {
+//            onEvent(Event.)
+        }
+        
+        Spacer(modifier = Modifier.height(8.dp))
+        
         FilledBtn(
             text = "Сохранить",
             padding = 0.dp
         ) {
             onEvent(Event.CreatePlan)
         }
-
     }
 }
