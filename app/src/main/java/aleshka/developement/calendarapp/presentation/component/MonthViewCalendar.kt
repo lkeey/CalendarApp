@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.mabn.calendarlibrary.component.CalendarPager
-import com.mabn.calendarlibrary.core.CalendarTheme
+import aleshka.developement.calendarapp.presentation.core.CalendarTheme
 import com.mabn.calendarlibrary.utils.dayViewModifier
 import java.time.LocalDate
 import java.time.YearMonth

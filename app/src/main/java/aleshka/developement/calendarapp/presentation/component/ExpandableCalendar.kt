@@ -14,10 +14,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mabn.calendarlibrary.component.MonthText
-import com.mabn.calendarlibrary.core.CalendarIntent
-import com.mabn.calendarlibrary.core.CalendarTheme
-import com.mabn.calendarlibrary.core.Period
-import com.mabn.calendarlibrary.core.calendarDefaultTheme
+import aleshka.developement.calendarapp.presentation.core.CalendarIntent
+import aleshka.developement.calendarapp.presentation.core.CalendarTheme
+import aleshka.developement.calendarapp.presentation.core.Period
+import aleshka.developement.calendarapp.presentation.core.calendarDefaultTheme
 import com.mabn.calendarlibrary.utils.getWeekStartDate
 import java.time.LocalDate
 import java.time.YearMonth

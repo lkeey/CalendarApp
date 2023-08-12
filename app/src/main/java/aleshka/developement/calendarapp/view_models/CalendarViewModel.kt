@@ -4,8 +4,8 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mabn.calendarlibrary.core.CalendarIntent
-import com.mabn.calendarlibrary.core.Period
+import aleshka.developement.calendarapp.presentation.core.CalendarIntent
+import aleshka.developement.calendarapp.presentation.core.Period
 import com.mabn.calendarlibrary.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*

@@ -1,4 +1,4 @@
-package com.mabn.calendarlibrary.core
+package aleshka.developement.calendarapp.presentation.core
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable

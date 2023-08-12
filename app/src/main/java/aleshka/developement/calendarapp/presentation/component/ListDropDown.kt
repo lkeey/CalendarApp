@@ -1,11 +1,9 @@
 package aleshka.developement.calendarapp.presentation.component
 
 import aleshka.developement.calendarapp.R
-import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ExposedDropdownMenuBox
@@ -21,24 +19,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun ListDropDown(
-
+    subjects: List<String>,
     onTextChanged: (String) -> Unit
 ) {
-    val context = LocalContext.current
-    val coffeeDrinks = arrayOf("Americano", "Cappuccino", "Espresso", "Latte", "Mocha")
-    var expanded by remember { mutableStateOf(false) }
-    var selectedText by remember { mutableStateOf(coffeeDrinks[0]) }
+
+    var expanded by remember {
+        mutableStateOf(false)
+    }
     val textValue = remember {
         mutableStateOf("")
     }
@@ -46,7 +42,6 @@ fun ListDropDown(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(32.dp)
     ) {
         ExposedDropdownMenuBox(
             expanded = expanded,
@@ -88,19 +83,23 @@ fun ListDropDown(
                     textValue.value = it
                     onTextChanged(it)
                 },
+                readOnly = true
             )
 
             ExposedDropdownMenu(
                 expanded = expanded,
-                onDismissRequest = { expanded = false }
+                onDismissRequest = {
+                    expanded = false
+                }
             ) {
-                coffeeDrinks.forEach { item ->
+                subjects.forEach { item ->
                     DropdownMenuItem(
-                        text = { Text(text = item) },
+                        text = {
+                            Text(text = item)
+                        },
                         onClick = {
-                            selectedText = item
                             expanded = false
-                            Toast.makeText(context, item, Toast.LENGTH_SHORT).show()
+                            textValue.value = item
                         }
                     )
                 }

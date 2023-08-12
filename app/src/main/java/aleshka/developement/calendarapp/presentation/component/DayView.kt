@@ -20,7 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mabn.calendarlibrary.core.CalendarTheme
+import aleshka.developement.calendarapp.presentation.core.CalendarTheme
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.TextStyle

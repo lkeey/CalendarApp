@@ -48,10 +48,20 @@ fun CreatePlan (
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        ListDropDown(
+        val subjects = listOf(
+            "Астрономия",
+            "Английский",
+            "Литература",
+            "Математика",
+            "Информатика",
+            "Дизайн",
+            "Другое"
+        )
 
+        ListDropDown(
+            subjects = subjects
         ) {
-//            onEvent(Event.)
+            onEvent(Event.OnSubjectUpdated(it))
         }
         
         Spacer(modifier = Modifier.height(8.dp))

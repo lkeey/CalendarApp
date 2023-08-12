@@ -7,6 +7,8 @@ data class PlanState (
 
     val title: String = "",
     val date: String = "",
+    val subject: String = "",
+    val color: String = "",
 
     val isAddingPlan: Boolean = false,
 )
