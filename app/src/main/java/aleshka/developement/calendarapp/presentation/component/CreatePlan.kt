@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.toColorInt
 
 @Composable
 fun CreatePlan (
@@ -69,16 +70,16 @@ fun CreatePlan (
         
         Spacer(modifier = Modifier.height(8.dp))
 
-        val colors = listOf(
-            Color(0xFF7E50FF),
-            Color(0xFFFF985E),
-            Color(0xFF5D96FF),
-            Color(0xFFFF0000),
-            Color(0xFF000000),
-       )
+        val colorsHex = listOf(
+            "#FF7E50FF",
+            "#FFFF985E",
+            "#FF5D96FF",
+            "#FFFF0000",
+            "#FF000000",
+        )
 
         ColorsBox (
-            colors = colors
+            colorsHex = colorsHex
         ) {
             onEvent(Event.OnColorUpdated(it.toString()))
         }

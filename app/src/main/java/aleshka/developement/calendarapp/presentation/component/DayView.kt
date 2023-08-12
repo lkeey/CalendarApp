@@ -1,5 +1,6 @@
 package aleshka.developement.calendarapp.presentation.component
 
+import aleshka.developement.calendarapp.presentation.core.CalendarTheme
 import aleshka.developement.calendarapp.states.PlanState
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -20,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import aleshka.developement.calendarapp.presentation.core.CalendarTheme
+import androidx.core.graphics.toColorInt
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.TextStyle
@@ -80,7 +81,8 @@ fun DayView(
 
     Column(
         modifier = Modifier
-            .heightIn(max =
+            .heightIn(
+                max =
                 if (weekDayLabel) {
                     70.dp + 50.dp
                 } else 70.dp
@@ -103,12 +105,13 @@ fun DayView(
             )
         }
 
-//        Text (
-//            text = "${toDos}"
+//        Text(
+//            text = "$color"
 //        )
 
         Column(
             modifier = Modifier
+                .clip(RoundedCornerShape(4.dp))
                 .clickable {
                     onDayClick(date)
                 },
@@ -130,19 +133,20 @@ fun DayView(
                     }
             )
 
-            toDos.forEach {
-                Box (
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .clip(CircleShape)
-                        .background(
-                            Color(0xFF3579F8),
-                            shape = RoundedCornerShape(size = 100.dp)
-                        )
-                        .height(12.dp)
-                        .size(24.dp)
-                        .animateContentSize()
-                )
+            Row {
+                toDos.forEach {
+                    Box (
+                        modifier = Modifier
+                            .padding(horizontal = 2.dp)
+                            .clip(CircleShape)
+                            .background(
+                                color = Color(it.color.toColorInt()),
+                                shape = RoundedCornerShape(size = 100.dp)
+                            )
+                            .size(8.dp)
+                            .animateContentSize()
+                    )
+                }
             }
         }
     }

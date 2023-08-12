@@ -1,5 +1,6 @@
 package aleshka.developement.calendarapp.presentation.component
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -18,39 +19,46 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.toColorInt
 
 @Composable
 fun ColorsBox (
-    colors: List<Color>,
-    onValueChanged: (Color) -> Unit
+    colorsHex: List<String>,
+    onValueChanged: (String) -> Unit
 ) {
 
-    var chosenColor by remember {
-        mutableStateOf(colors[0])
+    var chosenColorHex by remember {
+        mutableStateOf(colorsHex[0])
     }
 
     Row (
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        colors.forEach {
+        colorsHex.forEach { hex->
+            try {
+                val color = Color(hex.toColorInt())
+            } catch (ex: Exception) {
+                Log.i("ViewModelPlans", "ex - ${ex.message}")
+            }
+
             Box (
                 modifier = Modifier
                     .padding(horizontal = 8.dp)
                     .size(28.dp)
                     .clickable {
-                        chosenColor = it
-                        onValueChanged(it)
+                        chosenColorHex = hex
+                        onValueChanged(hex)
                     }
                     .border(
-                        width = if (chosenColor == it) 0.dp else 4.dp,
-                        color = it,
+                        width = if (chosenColorHex == hex) 0.dp else 4.dp,
+                        color = Color(hex.toColorInt()),
                         CircleShape
                     )
                     .padding(2.dp)
                     .clip(CircleShape)
                     .background(
-                        color = it,
+                        color = Color(hex.toColorInt()),
                         shape = CircleShape
                     )
             )

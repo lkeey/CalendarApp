@@ -92,14 +92,15 @@ fun ListDropDown(
                     expanded = false
                 }
             ) {
-                subjects.forEach { item ->
+                subjects.forEach {
                     DropdownMenuItem(
                         text = {
-                            Text(text = item)
+                            Text(text = it)
                         },
                         onClick = {
                             expanded = false
-                            textValue.value = item
+                            textValue.value = it
+                            onTextChanged(it)
                         }
                     )
                 }
