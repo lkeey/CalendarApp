@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -61,11 +62,29 @@ fun CreatePlan (
         ListDropDown(
             subjects = subjects
         ) {
+            Log.i("ViewModelPlans", "subj - $it")
+
             onEvent(Event.OnSubjectUpdated(it))
         }
         
         Spacer(modifier = Modifier.height(8.dp))
-        
+
+        val colors = listOf(
+            Color(0xFF7E50FF),
+            Color(0xFFFF985E),
+            Color(0xFF5D96FF),
+            Color(0xFFFF0000),
+            Color(0xFF000000),
+       )
+
+        ColorsBox (
+            colors = colors
+        ) {
+            onEvent(Event.OnColorUpdated(it.toString()))
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
         FilledBtn(
             text = "Сохранить",
             padding = 0.dp

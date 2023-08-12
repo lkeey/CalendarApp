@@ -1,10 +1,11 @@
 package aleshka.developement.calendarapp.view_models
 
-import aleshka.developement.calendarapp.states.PlanState
 import aleshka.developement.calendarapp.data.database.PlansDatabase
 import aleshka.developement.calendarapp.events.Event
 import aleshka.developement.calendarapp.models.PlanModel
 import aleshka.developement.calendarapp.repositories.PlansRepository
+import aleshka.developement.calendarapp.states.PlanState
+import aleshka.developement.calendarapp.utils.Status
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -47,42 +48,48 @@ class PlansViewModel (
     ) {
         when (event) {
             Event.CreatePlan -> {
-                val title = state.value.title
-                val date = state.value.date
 
-                if (title.isBlank()) {
-                    Log.i(TAG, "title is not valid")
+                when (checkData()) {
+                    1 -> {
+                        Log.i(TAG, "title is not valid")
+                        return
+                    }
+                    2 -> {
+                        Log.i(TAG, "date is not valid")
+                        return
+                    }
+                    3 -> {
+                        Log.i(TAG, "color is not valid")
+                        return
+                    }
+                    4 -> {
+                        Log.i(TAG, "subject is not valid")
+                        return
+                    }
+                    else -> {
+                        val plan = PlanModel(
+                            title = state.value.title,
+                            date = state.value.date,
+                            color = state.value.color,
+                            subject = state.value.subject,
+                        )
 
-                    return
+                        viewModelScope.launch {
+                            repository.addPlan(plan = plan)
+                        }
+
+                        _state.update {
+                            it.copy(
+                                title = "",
+                                date = "",
+                                color = "",
+                                subject = "",
+                                isAddingPlan = false
+                            )
+                        }
+                    }
                 }
 
-                if (date.isBlank()) {
-                    Log.i(TAG, "date is not valid")
-
-                    return
-                }
-
-                val plan = PlanModel (
-                    title = title,
-                    date = date
-                )
-
-                viewModelScope.launch {
-                    repository.addPlan(plan = plan)
-                }
-
-                _state.update {
-                    it.copy(
-                        title = "",
-                        date = ""
-                    )
-                }
-
-                _state.update {
-                    it.copy(
-                        isAddingPlan = false
-                    )
-                }
             }
             is Event.OnDateUpdated -> {
                 _state.update {
@@ -121,6 +128,31 @@ class PlansViewModel (
                 Log.i(TAG, "isAdding - ${_state.value.isAddingPlan}")
 
             }
+
+            is Event.OnColorUpdated -> {
+                _state.update {
+                    it.copy(
+                        color = event.color
+                    )
+                }
+            }
+
+            is Event.OnSubjectUpdated -> {
+                _state.update {
+                    it.copy(
+                        subject = event.subject
+                    )
+                }
+            }
         }
     }
+
+    private fun checkData() : Int {
+        return if (state.value.title.isBlank()) Status.ERROR_TITLE
+        else if (state.value.date.isBlank()) Status.ERROR_DATE
+        else if (state.value.color.isBlank()) Status.ERROR_COLOR
+        else if (state.value.subject.isBlank()) Status.ERROR_SUBJECT
+        else Status.SUCCESS
+    }
+
 }

@@ -10,5 +10,7 @@ data class PlanModel(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val title: String,
-    val date: String
+    val date: String,
+    val subject: String,
+    val color: String,
 )
