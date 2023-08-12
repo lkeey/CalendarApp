@@ -6,11 +6,11 @@ import aleshka.developement.calendarapp.events.Event
 import aleshka.developement.calendarapp.models.PlanModel
 import aleshka.developement.calendarapp.repositories.PlansRepository
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -24,11 +24,10 @@ class PlansViewModel (
         const val TAG = "ViewModelPlans"
     }
 
-    private val _plans = MutableStateFlow<List<PlanModel>>(emptyList())
-    val plans = _plans.asStateFlow().value
-
     private var database : PlansDatabase = PlansDatabase.invoke(context)
     private var repository : PlansRepository = PlansRepository(database = database)
+
+    private val _plans = repository.getPlans()
 
     private val _state = MutableStateFlow(PlanState())
     val state = combine(_state, _plans) { state, plans ->
@@ -37,7 +36,7 @@ class PlansViewModel (
         )
     }.stateIn(
         viewModelScope,
-        SharingStarted.WhileSubscribed(5000),
+        SharingStarted.WhileSubscribed(),
         PlanState()
     )
 
@@ -49,7 +48,15 @@ class PlansViewModel (
                 val title = state.value.title
                 val date = state.value.date
 
-                if (title.isBlank() || date.isBlank()) {
+                if (title.isBlank()) {
+                    Log.i(TAG, "title is not valid")
+
+                    return
+                }
+
+                if (date.isBlank()) {
+                    Log.i(TAG, "date is not valid")
+
                     return
                 }
 
@@ -88,8 +95,26 @@ class PlansViewModel (
                     repository.deletePlan(event.plan)
                 }
             }
+
+            Event.HideCreatingSheet -> {
+                _state.update {
+                    it.copy(
+                        isAddingPlan = false
+                    )
+                }
+            }
+            Event.ShowCreatingSheet -> {
+                _state.update {
+
+                    it.copy(
+                        isAddingPlan = true
+                    )
+
+                }
+
+                Log.i(TAG, "isAdding - ${_state.value.isAddingPlan}")
+
+            }
         }
     }
-
-
 }

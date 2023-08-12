@@ -1,5 +1,6 @@
 package aleshka.developement.calendarapp.presentation.component
 
+import aleshka.developement.calendarapp.States.PlanState
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
@@ -24,7 +25,8 @@ internal fun InlineCalendar(
     theme: CalendarTheme,
     loadNextWeek: (nextWeekDate: LocalDate) -> Unit,
     loadPrevWeek: (endWeekDate: LocalDate) -> Unit,
-    onDayClick: (LocalDate) -> Unit
+    onDayClick: (LocalDate) -> Unit,
+    state: PlanState
 ) {
 
     /*
@@ -53,7 +55,8 @@ internal fun InlineCalendar(
                             theme = theme,
                             isSelected = selectedDate == date,
                             onDayClick = onDayClick,
-                            modifier = Modifier.dayViewModifier(date)
+                            modifier = Modifier.dayViewModifier(date),
+                            state = state
                         )
                     }
                 }

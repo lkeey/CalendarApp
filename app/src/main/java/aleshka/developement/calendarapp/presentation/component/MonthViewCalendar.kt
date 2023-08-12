@@ -1,5 +1,6 @@
 package aleshka.developement.calendarapp.presentation.component
 
+import aleshka.developement.calendarapp.States.PlanState
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
@@ -28,7 +29,8 @@ internal fun MonthViewCalendar(
     theme: CalendarTheme,
     currentMonth: YearMonth,
     loadDatesForMonth: (YearMonth) -> Unit,
-    onDayClick: (LocalDate) -> Unit
+    onDayClick: (LocalDate) -> Unit,
+    state: PlanState
 ) {
 
     val itemWidth = LocalConfiguration.current.screenWidthDp / 7
@@ -39,31 +41,34 @@ internal fun MonthViewCalendar(
         loadPrevDates = { loadDatesForMonth(currentMonth.minusMonths(2)) } // why 2
     ) { currentPage ->
 
-        FlowRow(
-            Modifier.height(400.dp)) {
-                loadedDates[currentPage].forEachIndexed { index, date ->
+        FlowRow (
+            Modifier
+                .height(400.dp)
+        ) {
+            loadedDates[currentPage].forEachIndexed { index, date ->
 
-                    Box(
-                        Modifier
-                            .width(itemWidth.dp)
-                            .padding(5.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        DayView(
-                            date,
-                            theme = theme,
-                            isSelected = selectedDate == date,
-                            onDayClick = {
-                                onDayClick(date)
-                            },
-                            // if index less then 7,
-                            // it means that we should show weekDay
-                            weekDayLabel = index < 7,
-                            modifier = Modifier
-                                .dayViewModifier(date, currentMonth, monthView = true),
-                        )
-                    }
+                Box(
+                    Modifier
+                        .width(itemWidth.dp)
+                        .padding(5.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    DayView(
+                        date,
+                        theme = theme,
+                        isSelected = selectedDate == date,
+                        onDayClick = {
+                            onDayClick(date)
+                        },
+                        // if index less then 7,
+                        // it means that we should show weekDay
+                        weekDayLabel = index < 7,
+                        modifier = Modifier
+                            .dayViewModifier(date, currentMonth, monthView = true),
+                        state = state
+                    )
                 }
+            }
         }
     }
 }

@@ -72,8 +72,9 @@ dependencies {
     implementation("androidx.room:room-ktx:2.5.1")
     //Koin
     implementation ("io.insert-koin:koin-androidx-compose:3.4.6")
-    //Observe As State
-    implementation("androidx.compose.runtime:runtime-livedata:1.5.0")
+    // material 3 calendar
+    implementation( "com.maxkeppeler.sheets-compose-dialogs:core:1.0.2")
+    implementation( "com.maxkeppeler.sheets-compose-dialogs:calendar:1.0.2")
 
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

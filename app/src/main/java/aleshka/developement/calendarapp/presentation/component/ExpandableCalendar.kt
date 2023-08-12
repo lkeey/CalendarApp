@@ -1,5 +1,6 @@
 package aleshka.developement.calendarapp.presentation.component
 
+import aleshka.developement.calendarapp.States.PlanState
 import aleshka.developement.calendarapp.view_models.CalendarViewModel
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -11,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mabn.calendarlibrary.component.MonthText
 import com.mabn.calendarlibrary.core.CalendarIntent
 import com.mabn.calendarlibrary.core.CalendarTheme
@@ -19,7 +21,6 @@ import com.mabn.calendarlibrary.core.calendarDefaultTheme
 import com.mabn.calendarlibrary.utils.getWeekStartDate
 import java.time.LocalDate
 import java.time.YearMonth
-import androidx.lifecycle.viewmodel.compose.viewModel
 
 /**
  * @param dayShape - to set shape
@@ -35,8 +36,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @RequiresApi(Build.VERSION_CODES.O)
 fun ExpandableCalendar(
     onDayClick: (LocalDate) -> Unit,
-    theme: CalendarTheme = calendarDefaultTheme
+    theme: CalendarTheme = calendarDefaultTheme,
+    state: PlanState
 ) {
+
     val viewModel: CalendarViewModel = viewModel()
     val loadedDates = viewModel.visibleDates.collectAsState()
     val selectedDate = viewModel.selectedDate.collectAsState()
@@ -50,7 +53,8 @@ fun ExpandableCalendar(
         onIntent = viewModel::onIntent,
         calendarExpanded = calendarExpanded.value,
         theme = theme,
-        onDayClick = onDayClick
+        onDayClick = onDayClick,
+        state = state
     )
 }
 
@@ -63,7 +67,8 @@ private fun ExpandableCalendar(
     calendarExpanded: Boolean,
     theme: CalendarTheme,
     onIntent: (CalendarIntent) -> Unit,
-    onDayClick: (LocalDate) -> Unit
+    onDayClick: (LocalDate) -> Unit,
+    state: PlanState
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -108,14 +113,16 @@ private fun ExpandableCalendar(
                         CalendarIntent.LoadNextDates(
                             yearMonth.atDay(
                                 1
-                            ), period = Period.MONTH
+                            ),
+                            period = Period.MONTH
                         )
                     )
                 },
                 onDayClick = {
                     onIntent(CalendarIntent.SelectDate(it))
                     onDayClick(it)
-                }
+                },
+                state = state
             )
 
         } else {
@@ -123,7 +130,11 @@ private fun ExpandableCalendar(
                 loadedDates,
                 selectedDate,
                 theme = theme,
-                loadNextWeek = { nextWeekDate -> onIntent(CalendarIntent.LoadNextDates(nextWeekDate)) },
+                loadNextWeek = { nextWeekDate ->
+                    onIntent(
+                        CalendarIntent.LoadNextDates(nextWeekDate)
+                    )
+                },
                 loadPrevWeek = { endWeekDate ->
                     onIntent(
                         CalendarIntent.LoadNextDates(
@@ -134,7 +145,8 @@ private fun ExpandableCalendar(
                 onDayClick = {
                     onIntent(CalendarIntent.SelectDate(it))
                     onDayClick(it)
-                }
+                },
+                state = state
             )
         }
     }

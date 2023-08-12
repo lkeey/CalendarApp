@@ -1,5 +1,6 @@
 package aleshka.developement.calendarapp.presentation.component
 
+import aleshka.developement.calendarapp.States.PlanState
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
@@ -33,7 +34,8 @@ fun DayView(
     theme: CalendarTheme,
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
-    weekDayLabel: Boolean = true
+    weekDayLabel: Boolean = true,
+    state: PlanState
 ) {
 
     val isCurrentDay = date == LocalDate.now()
@@ -61,8 +63,15 @@ fun DayView(
         // if it is typically day
 
         else {
-            modifier.background(theme.dayBackgroundColor, shape = theme.dayShape)
+            modifier.background(
+                theme.dayBackgroundColor,
+                shape = theme.dayShape
+            )
         }
+
+    val toDos = state.plans.filter {
+        it.date == date.toString()
+    }
 
     Column(
         modifier = Modifier
@@ -88,6 +97,11 @@ fun DayView(
                 color = theme.weekDaysTextColor
             )
         }
+
+        Text (
+//            ${state.plans.getOrNull(0)?.date}
+            text = "${toDos}"
+        )
 
         Box(
             dayValueModifier

@@ -2,71 +2,74 @@ package aleshka.developement.calendarapp.presentation.screens
 
 import aleshka.developement.calendarapp.States.PlanState
 import aleshka.developement.calendarapp.events.Event
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import aleshka.developement.calendarapp.presentation.component.CreatePlan
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
 
+@RequiresApi(Build.VERSION_CODES.O)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun CalendarScreen(
     state: PlanState,
     onEvent: (Event) -> Unit
 ) {
-    Scaffold(
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    onEvent(Event.CreatePlan)
-                }) {
-                Icon(
-                    imageVector = Icons.Default.AddCircle,
-                    contentDescription = "add plan"
-                )
-            }
-        }
-    ) { paddingValues ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize(),
-            contentPadding = paddingValues,
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            items(state.plans) { plan ->
-                Row(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    Column(
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Text(
-                            text = "${plan.date} - ${plan.title}",
-                            fontSize = 20.sp
-                        )
-                    }
-                    IconButton(onClick = {
-                        onEvent(Event.DeletePlan(plan))
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.Delete,
-                            contentDescription = "delete plan"
-                        )
-                    }
+
+    val bottomState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true
+    )
+
+    val coroutineScope = rememberCoroutineScope()
+
+    ModalBottomSheetLayout(
+        modifier = Modifier
+            .wrapContentHeight(),
+        sheetState = bottomState,
+        sheetShape = RoundedCornerShape(
+            topStart = 40.dp,
+            topEnd = 40.dp
+        ),
+        sheetContent = {
+            CreatePlan(
+                state = state,
+                onEvent = onEvent
+            )
+        },
+    ) {
+        TestScreen (
+            state = state,
+            onEvent = onEvent,
+            onShowChanged = {
+                coroutineScope.launch {
+
+                    Log.i("ViewModelPlans", "show - ${state.isAddingPlan}")
+
+                    if (it) bottomState.show()
+                    else bottomState.hide()
+
                 }
             }
-        }
+        )
     }
 }
