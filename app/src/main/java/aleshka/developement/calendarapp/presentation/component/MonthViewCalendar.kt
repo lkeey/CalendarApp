@@ -1,22 +1,25 @@
 package aleshka.developement.calendarapp.presentation.component
 
 import aleshka.developement.calendarapp.domain.states.PlanState
+import aleshka.developement.calendarapp.utils.dayViewModifier
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.mabn.calendarlibrary.component.CalendarPager
-import aleshka.developement.calendarapp.presentation.core.CalendarTheme
-import aleshka.developement.calendarapp.utils.dayViewModifier
 import java.time.LocalDate
 import java.time.YearMonth
 
@@ -41,8 +44,29 @@ internal fun MonthViewCalendar(
     ) { currentPage ->
 
         FlowRow (
-            Modifier
-                .height(400.dp)
+            modifier = Modifier
+
+                .wrapContentSize()
+                .background(
+                    color = Color(0xFFFFFFFF),
+                    shape = RoundedCornerShape(
+                        bottomEnd = 40.dp,
+                        bottomStart = 40.dp
+                    )
+                )
+//                .background(
+//                    brush = Brush.verticalGradient(
+//                        colors = listOf(
+//                            Color.Transparent,
+//                            Color.Black.copy(alpha = .15f),
+//                        )
+//                    ),
+//                    shape = RoundedCornerShape(
+//                        bottomEnd = 40.dp,
+//                        bottomStart = 40.dp
+//                    )
+//                )
+                .zIndex(1f)
         ) {
             loadedDates[currentPage].forEachIndexed { index, date ->
 

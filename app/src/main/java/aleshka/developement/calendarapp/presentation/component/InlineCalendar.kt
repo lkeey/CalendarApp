@@ -1,7 +1,7 @@
 package aleshka.developement.calendarapp.presentation.component
 
 import aleshka.developement.calendarapp.domain.states.PlanState
-import aleshka.developement.calendarapp.presentation.core.CalendarTheme
+import aleshka.developement.calendarapp.utils.dayViewModifier
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.mabn.calendarlibrary.component.CalendarPager
-import aleshka.developement.calendarapp.utils.dayViewModifier
 import java.time.LocalDate
 import java.time.YearMonth
 

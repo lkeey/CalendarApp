@@ -3,9 +3,7 @@ package aleshka.developement.calendarapp.presentation.component
 import aleshka.developement.calendarapp.domain.states.PlanState
 import aleshka.developement.calendarapp.domain.view_models.CalendarViewModel
 import aleshka.developement.calendarapp.presentation.core.CalendarIntent
-import aleshka.developement.calendarapp.presentation.core.CalendarTheme
 import aleshka.developement.calendarapp.presentation.core.Period
-import aleshka.developement.calendarapp.presentation.core.calendarDefaultTheme
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateContentSize
@@ -38,7 +36,6 @@ import java.time.LocalDate
 @RequiresApi(Build.VERSION_CODES.O)
 fun ExpandableCalendar(
     onDayClick: (LocalDate) -> Unit,
-    theme: CalendarTheme = calendarDefaultTheme,
     state: PlanState
 ) {
 
@@ -51,7 +48,6 @@ fun ExpandableCalendar(
     Column(
         horizontalAlignment = Alignment.Start,
         modifier = Modifier
-            .background(theme.backgroundColor)
             .animateContentSize()
     ) {
 

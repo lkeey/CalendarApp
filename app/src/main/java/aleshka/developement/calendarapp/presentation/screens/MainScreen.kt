@@ -1,11 +1,10 @@
 package aleshka.developement.calendarapp.presentation.screens
 
 import aleshka.developement.calendarapp.domain.events.Event
-import aleshka.developement.calendarapp.presentation.sheets.CreatePlan
 import aleshka.developement.calendarapp.domain.states.PlanState
+import aleshka.developement.calendarapp.presentation.sheets.CreatePlan
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
@@ -14,7 +13,6 @@ import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 
@@ -44,8 +42,6 @@ fun MainScreen(
     val coroutineScope = rememberCoroutineScope()
 
     ModalBottomSheetLayout(
-        modifier = Modifier
-            .wrapContentHeight(),
         sheetState = bottomState,
         sheetShape = RoundedCornerShape(
             topStart = 40.dp,

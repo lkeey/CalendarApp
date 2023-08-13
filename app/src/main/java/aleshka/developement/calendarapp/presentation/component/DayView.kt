@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -52,7 +53,7 @@ fun DayView(
 
         if (isCurrentDay) {
             modifier.background(
-                color = Color(0xFF3579F8).copy(alpha = 0.5f),
+                color = Color(0xFF3579F8).copy(alpha = 0.75f),
                 shape = CircleShape
             )
         }
@@ -81,17 +82,8 @@ fun DayView(
 
     Column(
         modifier = Modifier
-            .wrapContentSize()
-            .heightIn(
-                max =
-                if (weekDayLabel) {
-                    70.dp + 50.dp
-                } else 70.dp
-            )
-            .widthIn(
-                max = 50.dp
-            ),
-        horizontalAlignment = Alignment.CenterHorizontally,
+            .wrapContentSize(),
+        horizontalAlignment = CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
 
@@ -121,23 +113,34 @@ fun DayView(
                 .clickable {
                     onDayClick(date)
                 },
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
         ) {
-
-            Text (
-                modifier = dayValueModifier
-                    .padding(5.dp),
-                text = date.dayOfMonth.toString(),
-                fontWeight = FontWeight.Bold,
-                fontSize = 25.sp,
-                textAlign = TextAlign.Center,
-                color =
-                    if (isSelected || isCurrentDay) {
-                        Color.White
-                    } else {
-                        Color(0xFF222222)
-                    }
-            )
+            Box (
+                modifier = Modifier
+                    .padding(1.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text (
+                    modifier = dayValueModifier
+                        .padding(4.dp)
+                        .size(24.dp),
+                    text = date.dayOfMonth.toString(),
+                    style = androidx.compose.ui.text.TextStyle(
+                        fontSize = 16.sp,
+                        fontFamily = FontFamily(Font(aleshka.developement.calendarapp.R.font.regular)),
+                        fontWeight = FontWeight(400),
+                        color =
+                        if (isSelected || isCurrentDay) {
+                            Color.White
+                        } else {
+                            Color(0xFF222222)
+                        },
+                        letterSpacing = 0.2.sp,
+                        textAlign = TextAlign.Center
+                    ),
+                )
+            }
 
             Row {
                 toDos.forEach {

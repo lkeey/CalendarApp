@@ -11,4 +11,7 @@ data class PlanState (
     val color: String = "",
 
     val isAddingPlan: Boolean = false,
+    val isSearching: Boolean = false,
+
+    val searchQuery: String = ""
 )
