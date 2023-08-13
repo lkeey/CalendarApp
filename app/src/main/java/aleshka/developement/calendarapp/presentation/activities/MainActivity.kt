@@ -1,7 +1,7 @@
-package aleshka.developement.calendarapp
+package aleshka.developement.calendarapp.presentation.activities
 
-import aleshka.developement.calendarapp.presentation.screens.CalendarScreen
-import aleshka.developement.calendarapp.view_models.PlansViewModel
+import aleshka.developement.calendarapp.domain.view_models.PlansViewModel
+import aleshka.developement.calendarapp.presentation.screens.MainScreen
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
             val viewModel = getViewModel<PlansViewModel>()
             val state by viewModel.state.collectAsState()
 
-            CalendarScreen(
+            MainScreen(
                 state = state,
                 onEvent = viewModel::onEvent
             )

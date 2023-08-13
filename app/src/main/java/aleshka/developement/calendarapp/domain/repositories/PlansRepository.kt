@@ -1,7 +1,7 @@
-package aleshka.developement.calendarapp.repositories
+package aleshka.developement.calendarapp.domain.repositories
 
 import aleshka.developement.calendarapp.data.database.PlansDatabase
-import aleshka.developement.calendarapp.models.PlanModel
+import aleshka.developement.calendarapp.data.models.PlanModel
 
 class PlansRepository (
     private val database: PlansDatabase

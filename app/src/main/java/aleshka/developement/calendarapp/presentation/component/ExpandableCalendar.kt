@@ -1,35 +1,37 @@
 package aleshka.developement.calendarapp.presentation.component
 
-import aleshka.developement.calendarapp.states.PlanState
-import aleshka.developement.calendarapp.view_models.CalendarViewModel
+import aleshka.developement.calendarapp.domain.states.PlanState
+import aleshka.developement.calendarapp.domain.view_models.CalendarViewModel
+import aleshka.developement.calendarapp.presentation.core.CalendarIntent
+import aleshka.developement.calendarapp.presentation.core.CalendarTheme
+import aleshka.developement.calendarapp.presentation.core.Period
+import aleshka.developement.calendarapp.presentation.core.calendarDefaultTheme
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.mabn.calendarlibrary.component.MonthText
-import aleshka.developement.calendarapp.presentation.core.CalendarIntent
-import aleshka.developement.calendarapp.presentation.core.CalendarTheme
-import aleshka.developement.calendarapp.presentation.core.Period
-import aleshka.developement.calendarapp.presentation.core.calendarDefaultTheme
 import com.mabn.calendarlibrary.utils.getWeekStartDate
 import java.time.LocalDate
-import java.time.YearMonth
 
 /**
- * @param dayShape - to set shape
- * @param backgroundColor - to set background color of the calendar
- * @param selectedDayBackgroundColor - to set background color of the chosen day
- * @param dayValueTextColor - to set text color of the day
- * @param selectedDayValueTextColor - to set text color of chosen day
- * @param headerTextColor - to set text color of the title
- * @param weekDaysTextColor - to set text color of the weekdays
+ * dayShape - to set shape
+ * backgroundColor - to set background color of the calendar
+ * selectedDayBackgroundColor - to set background color of the chosen day
+ * dayValueTextColor - to set text color of the day
+ * selectedDayValueTextColor - to set text color of chosen day
+ * headerTextColor - to set text color of the title
+ * weekDaysTextColor - to set text color of the weekdays
  * */
 
 @Composable
@@ -46,70 +48,84 @@ fun ExpandableCalendar(
     val calendarExpanded = viewModel.calendarExpanded.collectAsState()
     val currentMonth = viewModel.currentMonth.collectAsState()
 
-    ExpandableCalendar(
-        loadedDates = loadedDates.value,
-        selectedDate = selectedDate.value,
-        currentMonth = currentMonth.value,
-        onIntent = viewModel::onIntent,
-        calendarExpanded = calendarExpanded.value,
-        theme = theme,
-        onDayClick = onDayClick,
-        state = state
-    )
-}
-
-@RequiresApi(Build.VERSION_CODES.O)
-@Composable
-private fun ExpandableCalendar(
-    loadedDates: Array<List<LocalDate>>,
-    selectedDate: LocalDate,
-    currentMonth: YearMonth,
-    calendarExpanded: Boolean,
-    theme: CalendarTheme,
-    onIntent: (CalendarIntent) -> Unit,
-    onDayClick: (LocalDate) -> Unit,
-    state: PlanState
-) {
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = Alignment.Start,
         modifier = Modifier
-            .animateContentSize()
             .background(theme.backgroundColor)
+            .animateContentSize()
     ) {
 
-    /*
-        * show title
-    */
-        Row(
+        Spacer(modifier = Modifier.height(12.dp))
+
+        /*
+         search & bookmarks
+        */
+        Row (
+           modifier = Modifier
+               .fillMaxWidth()
+               .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .padding(bottom = 10.dp)
-                .fillMaxWidth()
-                .background(Color.Blue)
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
+            SearchTextField (
+                onTextChanged = {
+                    // TODO
+                }
+            )
 
-            Spacer(Modifier.weight(1f))
+            Box (
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 4.dp)
+                    .background(
+                        color = Color(0xFFBDB8B8),
+                        shape = RoundedCornerShape(size = 8.dp)
+                    )
+                    .padding(8.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.FavoriteBorder,
+                    contentDescription = "bookmark"
+                )
+            }
+        }
 
-            MonthText(selectedMonth = currentMonth, theme = theme)
+        Spacer(modifier = Modifier.height(8.dp))
 
-            Spacer(Modifier.weight(1f))
+        /*
+            month & toggle
+        */
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            MonthText(
+                selectedMonth = currentMonth.value
+            )
 
             ToggleExpandCalendarButton(
-                isExpanded = calendarExpanded,
-                expand = { onIntent(CalendarIntent.ExpandCalendar) },
-                collapse = { onIntent(CalendarIntent.CollapseCalendar) },
-                color = theme.headerTextColor
+                isExpanded = calendarExpanded.value,
+                expand = {
+                    viewModel.onIntent(CalendarIntent.ExpandCalendar)
+                },
+                collapse = {
+                    viewModel.onIntent(CalendarIntent.CollapseCalendar)
+                },
             )
         }
 
-        if (calendarExpanded) {
+        Spacer(modifier = Modifier.height(16.dp))
+
+        if (calendarExpanded.value) {
             MonthViewCalendar(
-                loadedDates,
-                selectedDate,
-                theme = theme,
-                currentMonth = currentMonth,
+                loadedDates.value,
+                selectedDate.value,
+                currentMonth = currentMonth.value,
                 loadDatesForMonth = { yearMonth ->
-                    onIntent(
+                    viewModel.onIntent(
                         CalendarIntent.LoadNextDates(
                             yearMonth.atDay(
                                 1
@@ -119,7 +135,7 @@ private fun ExpandableCalendar(
                     )
                 },
                 onDayClick = {
-                    onIntent(CalendarIntent.SelectDate(it))
+                    viewModel.onIntent(CalendarIntent.SelectDate(it))
                     onDayClick(it)
                 },
                 state = state
@@ -127,26 +143,26 @@ private fun ExpandableCalendar(
 
         } else {
             InlineCalendar(
-                loadedDates,
-                selectedDate,
-                theme = theme,
+                loadedDates.value,
+                selectedDate.value,
                 loadNextWeek = { nextWeekDate ->
-                    onIntent(
+                    viewModel.onIntent(
                         CalendarIntent.LoadNextDates(nextWeekDate)
                     )
                 },
                 loadPrevWeek = { endWeekDate ->
-                    onIntent(
+                    viewModel.onIntent(
                         CalendarIntent.LoadNextDates(
                             endWeekDate.minusDays(1).getWeekStartDate()
                         )
                     )
                 },
                 onDayClick = {
-                    onIntent(CalendarIntent.SelectDate(it))
+                    viewModel.onIntent(CalendarIntent.SelectDate(it))
                     onDayClick(it)
                 },
-                state = state
+                state = state,
+                currentMonth = currentMonth.value,
             )
         }
     }

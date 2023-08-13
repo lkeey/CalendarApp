@@ -1,10 +1,10 @@
-package aleshka.developement.calendarapp.view_models
+package aleshka.developement.calendarapp.domain.view_models
 
 import aleshka.developement.calendarapp.data.database.PlansDatabase
-import aleshka.developement.calendarapp.events.Event
-import aleshka.developement.calendarapp.models.PlanModel
-import aleshka.developement.calendarapp.repositories.PlansRepository
-import aleshka.developement.calendarapp.states.PlanState
+import aleshka.developement.calendarapp.domain.events.Event
+import aleshka.developement.calendarapp.data.models.PlanModel
+import aleshka.developement.calendarapp.domain.repositories.PlansRepository
+import aleshka.developement.calendarapp.domain.states.PlanState
 import aleshka.developement.calendarapp.utils.Status
 import android.content.Context
 import android.util.Log

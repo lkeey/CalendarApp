@@ -1,6 +1,6 @@
 package aleshka.developement.calendarapp.presentation.component
 
-import aleshka.developement.calendarapp.states.PlanState
+import aleshka.developement.calendarapp.domain.states.PlanState
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
@@ -16,7 +16,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.mabn.calendarlibrary.component.CalendarPager
 import aleshka.developement.calendarapp.presentation.core.CalendarTheme
-import com.mabn.calendarlibrary.utils.dayViewModifier
+import aleshka.developement.calendarapp.utils.dayViewModifier
 import java.time.LocalDate
 import java.time.YearMonth
 
@@ -26,7 +26,6 @@ import java.time.YearMonth
 internal fun MonthViewCalendar(
     loadedDates: Array<List<LocalDate>>,
     selectedDate: LocalDate,
-    theme: CalendarTheme,
     currentMonth: YearMonth,
     loadDatesForMonth: (YearMonth) -> Unit,
     onDayClick: (LocalDate) -> Unit,
@@ -55,7 +54,6 @@ internal fun MonthViewCalendar(
                 ) {
                     DayView(
                         date,
-                        theme = theme,
                         isSelected = selectedDate == date,
                         onDayClick = {
                             onDayClick(date)

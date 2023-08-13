@@ -1,7 +1,7 @@
 package aleshka.developement.calendarapp.data.database
 
 import aleshka.developement.calendarapp.data.dao.PlansDao
-import aleshka.developement.calendarapp.models.PlanModel
+import aleshka.developement.calendarapp.data.models.PlanModel
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room

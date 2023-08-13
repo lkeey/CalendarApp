@@ -1,7 +1,12 @@
-package aleshka.developement.calendarapp.presentation.component
+package aleshka.developement.calendarapp.presentation.sheets
 
-import aleshka.developement.calendarapp.events.Event
-import aleshka.developement.calendarapp.states.PlanState
+import aleshka.developement.calendarapp.domain.events.Event
+import aleshka.developement.calendarapp.domain.states.PlanState
+import aleshka.developement.calendarapp.presentation.component.CalendarInput
+import aleshka.developement.calendarapp.presentation.component.ColorsBox
+import aleshka.developement.calendarapp.presentation.component.FilledBtn
+import aleshka.developement.calendarapp.presentation.component.ListDropDown
+import aleshka.developement.calendarapp.presentation.component.OutlinedText
 import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,9 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.toColorInt
 
 @Composable
 fun CreatePlan (
@@ -68,7 +71,7 @@ fun CreatePlan (
             onEvent(Event.OnSubjectUpdated(it))
         }
         
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
         val colorsHex = listOf(
             "#FF7E50FF",
@@ -81,10 +84,10 @@ fun CreatePlan (
         ColorsBox (
             colorsHex = colorsHex
         ) {
-            onEvent(Event.OnColorUpdated(it.toString()))
+            onEvent(Event.OnColorUpdated(it))
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
         FilledBtn(
             text = "Сохранить",

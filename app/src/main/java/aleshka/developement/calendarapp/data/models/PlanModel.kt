@@ -1,4 +1,4 @@
-package aleshka.developement.calendarapp.models
+package aleshka.developement.calendarapp.data.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

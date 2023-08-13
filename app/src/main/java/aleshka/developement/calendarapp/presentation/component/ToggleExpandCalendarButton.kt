@@ -12,8 +12,7 @@ import androidx.compose.ui.graphics.Color
 fun ToggleExpandCalendarButton(
     isExpanded: Boolean,
     expand: () -> Unit,
-    collapse: () -> Unit,
-    color: Color
+    collapse: () -> Unit
 ) {
 
     /*
@@ -23,7 +22,11 @@ fun ToggleExpandCalendarButton(
 
     IconToggleButton(
         checked = isExpanded,
-        onCheckedChange = { isChecked -> if (isChecked) expand() else collapse() }
+        onCheckedChange = {
+                isChecked ->
+            if (isChecked) expand()
+            else collapse()
+        }
     ) {
 
         /*
@@ -32,9 +35,17 @@ fun ToggleExpandCalendarButton(
         */
 
         if (isExpanded) {
-            Icon(Icons.Default.KeyboardArrowUp, "Collapse calendar", tint = color)
+            Icon(
+                Icons.Default.KeyboardArrowUp,
+                "Collapse calendar",
+                tint = Color(0xFF222222)
+            )
         } else {
-            Icon(Icons.Default.KeyboardArrowDown, "Expand calendar", tint = color)
+            Icon(
+                Icons.Default.KeyboardArrowDown,
+                "Expand calendar",
+                tint = Color(0xFF222222)
+            )
         }
 
     }

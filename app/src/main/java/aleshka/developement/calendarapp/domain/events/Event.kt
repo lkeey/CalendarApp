@@ -1,6 +1,6 @@
-package aleshka.developement.calendarapp.events
+package aleshka.developement.calendarapp.domain.events
 
-import aleshka.developement.calendarapp.models.PlanModel
+import aleshka.developement.calendarapp.data.models.PlanModel
 
 sealed interface Event {
     object CreatePlan: Event

@@ -1,6 +1,6 @@
 package aleshka.developement.calendarapp.data.dao
 
-import aleshka.developement.calendarapp.models.PlanModel
+import aleshka.developement.calendarapp.data.models.PlanModel
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query

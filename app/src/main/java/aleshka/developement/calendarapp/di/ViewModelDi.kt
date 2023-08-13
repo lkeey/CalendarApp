@@ -1,6 +1,6 @@
 package aleshka.developement.calendarapp.di
 
-import aleshka.developement.calendarapp.view_models.PlansViewModel
+import aleshka.developement.calendarapp.domain.view_models.PlansViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

@@ -1,6 +1,7 @@
 package aleshka.developement.calendarapp.presentation.component
 
-import aleshka.developement.calendarapp.states.PlanState
+import aleshka.developement.calendarapp.domain.states.PlanState
+import aleshka.developement.calendarapp.presentation.core.CalendarTheme
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
@@ -13,16 +14,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.mabn.calendarlibrary.component.CalendarPager
-import aleshka.developement.calendarapp.presentation.core.CalendarTheme
-import com.mabn.calendarlibrary.utils.dayViewModifier
+import aleshka.developement.calendarapp.utils.dayViewModifier
 import java.time.LocalDate
+import java.time.YearMonth
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 internal fun InlineCalendar(
     loadedDates: Array<List<LocalDate>>,
     selectedDate: LocalDate,
-    theme: CalendarTheme,
+    currentMonth: YearMonth,
     loadNextWeek: (nextWeekDate: LocalDate) -> Unit,
     loadPrevWeek: (endWeekDate: LocalDate) -> Unit,
     onDayClick: (LocalDate) -> Unit,
@@ -52,11 +53,10 @@ internal fun InlineCalendar(
 
                         DayView(
                             date,
-                            theme = theme,
                             isSelected = selectedDate == date,
                             onDayClick = onDayClick,
-                            modifier = Modifier.dayViewModifier(date),
-                            state = state
+                            modifier = Modifier.dayViewModifier(date, currentMonth),
+                            state = state,
                         )
                     }
                 }

@@ -1,7 +1,6 @@
 package aleshka.developement.calendarapp.presentation.component
 
-import aleshka.developement.calendarapp.presentation.core.CalendarTheme
-import aleshka.developement.calendarapp.states.PlanState
+import aleshka.developement.calendarapp.domain.states.PlanState
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateContentSize
@@ -17,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -37,7 +38,6 @@ import java.time.format.TextStyle
 fun DayView(
     date: LocalDate,
     onDayClick: (LocalDate) -> Unit,
-    theme: CalendarTheme,
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
     weekDayLabel: Boolean = true,
@@ -52,8 +52,8 @@ fun DayView(
 
         if (isCurrentDay) {
             modifier.background(
-                theme.selectedDayBackgroundColor.copy(alpha = 0.5f),
-                shape = theme.dayShape
+                color = Color(0xFF3579F8).copy(alpha = 0.5f),
+                shape = CircleShape
             )
         }
 
@@ -61,8 +61,8 @@ fun DayView(
 
         else if (isSelected) {
             modifier.background(
-                theme.selectedDayBackgroundColor,
-                shape = theme.dayShape
+                color = Color(0xFF3579F8),
+                shape = CircleShape
             )
         }
 
@@ -70,8 +70,8 @@ fun DayView(
 
         else {
             modifier.background(
-                theme.dayBackgroundColor,
-                shape = theme.dayShape
+                color = Color.White,
+                shape = CircleShape
             )
         }
 
@@ -81,13 +81,16 @@ fun DayView(
 
     Column(
         modifier = Modifier
+            .wrapContentSize()
             .heightIn(
                 max =
                 if (weekDayLabel) {
                     70.dp + 50.dp
                 } else 70.dp
             )
-            .widthIn(max = 50.dp),
+            .widthIn(
+                max = 50.dp
+            ),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
@@ -95,19 +98,22 @@ fun DayView(
         // show weekDay (Mon, Tue)
 
         if (weekDayLabel) {
-            Text(
-                DayOfWeek.values()[date.dayOfWeek.value - 1].getDisplayName(
+            Text (
+                modifier = Modifier
+                    .size(25.dp),
+                text = DayOfWeek.values()[date.dayOfWeek.value - 1].getDisplayName(
                     TextStyle.SHORT,
                     LocalContext.current.resources.configuration.locales[0]
                 ),
-                fontSize = 10.sp,
-                color = theme.weekDaysTextColor
+                style = androidx.compose.ui.text.TextStyle(
+                    fontSize = 12.sp,
+                    fontFamily = FontFamily(Font(aleshka.developement.calendarapp.R.font.regular)),
+                    fontWeight = FontWeight(400),
+                    color = Color(0xFF222222),
+                    letterSpacing = 0.2.sp,
+                )
             )
         }
-
-//        Text(
-//            text = "$color"
-//        )
 
         Column(
             modifier = Modifier
@@ -127,9 +133,9 @@ fun DayView(
                 textAlign = TextAlign.Center,
                 color =
                     if (isSelected || isCurrentDay) {
-                        theme.selectedDayValueTextColor
+                        Color.White
                     } else {
-                        theme.dayValueTextColor
+                        Color(0xFF222222)
                     }
             )
 

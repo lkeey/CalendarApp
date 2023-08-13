@@ -1,6 +1,6 @@
-package aleshka.developement.calendarapp.states
+package aleshka.developement.calendarapp.domain.states
 
-import aleshka.developement.calendarapp.models.PlanModel
+import aleshka.developement.calendarapp.data.models.PlanModel
 
 data class PlanState (
     val plans: List<PlanModel> = emptyList(),
