@@ -1,22 +1,23 @@
 package aleshka.developement.calendarapp.presentation.component
 
 import aleshka.developement.calendarapp.R
+import aleshka.developement.calendarapp.domain.events.Event
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.material3.IconButtonDefaults.outlinedShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -26,12 +27,15 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun SearchTextField (
+    onClearFocus: () -> Unit,
     onTextChanged: (String) -> Unit
 ) {
 
     val textValue = remember {
         mutableStateOf("")
     }
+
+    val focusManager = LocalFocusManager.current
 
     OutlinedTextField(
         modifier = Modifier
@@ -56,9 +60,11 @@ fun SearchTextField (
             cursorColor = Color(0xFF3579F8),
             backgroundColor = Color.White
         ),
-        keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Next
-        ),
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+        keyboardActions = KeyboardActions(onSearch = {
+            onClearFocus()
+            focusManager.clearFocus()
+        }),
         singleLine = true,
         maxLines = 1,
         value = textValue.value,

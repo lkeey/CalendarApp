@@ -67,45 +67,61 @@ fun CalendarScreen (
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
 
+            /*
+                Calendar
+            */
                 item {
                     ExpandableCalendar (
+                        state = state,
                         onDayClick = {
                             currentDate.value = it
                         },
-                        state = state,
+                        onEvent = onEvent
                     )
                 }
 
-                items(state.plans) { plan ->
-                    Row (
-                        modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        Column(
-                            modifier = Modifier.weight(1f)
+
+            /*
+                isSearching
+            */
+                if (state.isSearching) {
+
+                    val searchingPlans = state.plans.filter {
+                        it.subject.contains(state.searchQuery, ignoreCase = true) ||
+                                it.title.contains(state.searchQuery, ignoreCase = true)
+                    }
+
+                    items(searchingPlans) { plan ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
                         ) {
-                            Text(
-                                text = "${plan.date} - ${plan.title}",
-                                fontSize = 20.sp
-                            )
-                        }
-                        IconButton(onClick = {
-                            onEvent(Event.DeletePlan(plan))
-                        }) {
-                            Icon(
-                                imageVector = Icons.Default.Delete,
-                                contentDescription = "delete plan"
-                            )
+                            Column(
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Text(
+                                    text = "${plan.date} - ${plan.title}",
+                                    fontSize = 20.sp
+                                )
+                            }
+                            IconButton(onClick = {
+                                onEvent(Event.DeletePlan(plan))
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = "delete plan"
+                                )
+                            }
                         }
                     }
-                }
-
-                item {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier
-                            .fillMaxSize()) {
-                        Text("Selected date: ${currentDate.value} / ${state.isAddingPlan}")
+                } else {
+                    item {
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier
+                                .fillMaxSize()) {
+                            Text("Selected date: ${currentDate.value} / ${state.isAddingPlan}")
+                        }
                     }
                 }
             }

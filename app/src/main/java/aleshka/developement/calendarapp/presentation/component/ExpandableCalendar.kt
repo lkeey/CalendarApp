@@ -1,5 +1,6 @@
 package aleshka.developement.calendarapp.presentation.component
 
+import aleshka.developement.calendarapp.domain.events.Event
 import aleshka.developement.calendarapp.domain.states.PlanState
 import aleshka.developement.calendarapp.domain.view_models.CalendarViewModel
 import aleshka.developement.calendarapp.presentation.core.CalendarIntent
@@ -35,8 +36,9 @@ import java.time.LocalDate
 @Composable
 @RequiresApi(Build.VERSION_CODES.O)
 fun ExpandableCalendar(
+    state: PlanState,
     onDayClick: (LocalDate) -> Unit,
-    state: PlanState
+    onEvent: (Event) -> Unit,
 ) {
 
     val viewModel: CalendarViewModel = viewModel()
@@ -64,8 +66,11 @@ fun ExpandableCalendar(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             SearchTextField (
+                onClearFocus = {
+                    onEvent(Event.CancelSearching)
+                },
                 onTextChanged = {
-                    // TODO
+                    onEvent(Event.OnSearchQueryUpdated(it))
                 }
             )
 
@@ -115,7 +120,7 @@ fun ExpandableCalendar(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        if (calendarExpanded.value) {
+        if (calendarExpanded.value && !state.isSearching) {
             MonthViewCalendar(
                 loadedDates.value,
                 selectedDate.value,
@@ -131,6 +136,8 @@ fun ExpandableCalendar(
                     )
                 },
                 onDayClick = {
+                    onEvent(Event.CancelSearching)
+
                     viewModel.onIntent(CalendarIntent.SelectDate(it))
                     onDayClick(it)
                 },
@@ -154,6 +161,8 @@ fun ExpandableCalendar(
                     )
                 },
                 onDayClick = {
+                    onEvent(Event.CancelSearching)
+
                     viewModel.onIntent(CalendarIntent.SelectDate(it))
                     onDayClick(it)
                 },

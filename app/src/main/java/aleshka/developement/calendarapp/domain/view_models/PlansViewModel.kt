@@ -1,8 +1,8 @@
 package aleshka.developement.calendarapp.domain.view_models
 
 import aleshka.developement.calendarapp.data.database.PlansDatabase
-import aleshka.developement.calendarapp.domain.events.Event
 import aleshka.developement.calendarapp.data.models.PlanModel
+import aleshka.developement.calendarapp.domain.events.Event
 import aleshka.developement.calendarapp.domain.repositories.PlansRepository
 import aleshka.developement.calendarapp.domain.states.PlanState
 import aleshka.developement.calendarapp.utils.Status
@@ -141,6 +141,23 @@ class PlansViewModel (
                 _state.update {
                     it.copy(
                         subject = event.subject
+                    )
+                }
+            }
+
+            is Event.OnSearchQueryUpdated -> {
+                _state.update {
+                    it.copy(
+                        searchQuery = event.searchQuery,
+                        isSearching = true
+                    )
+                }
+            }
+
+            Event.CancelSearching -> {
+                _state.update {
+                    it.copy(
+                        isSearching = false
                     )
                 }
             }
