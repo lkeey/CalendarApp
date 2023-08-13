@@ -82,7 +82,7 @@ fun ExpandableCalendar(
             Box (
                 modifier = Modifier
                     .fillMaxSize()
-                    .heightIn(max = 46.dp)
+                    .heightIn(max = 52.dp)
                     .background(
                         color = if (state.isShowingFavourites) Color(0xFF3579F8) else Color(0xFFFFFFFF),
                         shape = RoundedCornerShape(size = 8.dp)

@@ -72,7 +72,8 @@ class PlansViewModel (
                             date = state.value.date,
                             color = state.value.color,
                             subject = state.value.subject,
-                            isFavourite = state.value.isFavourite
+                            type = state.value.type,
+                            isFavourite = state.value.isFavourite,
                         )
 
                         viewModelScope.launch {
@@ -85,6 +86,7 @@ class PlansViewModel (
                                 date = "",
                                 color = "",
                                 subject = "",
+                                isFavourite = false,
                                 isAddingPlan = false
                             )
                         }
@@ -122,7 +124,8 @@ class PlansViewModel (
             Event.ShowCreatingSheet -> {
                 _state.update {
                     it.copy(
-                        isAddingPlan = true
+                        isAddingPlan = true,
+                        isSearching = false
                     )
                 }
 
@@ -166,7 +169,8 @@ class PlansViewModel (
             is Event.OnFavouritesShowing -> {
                 _state.update {
                     it.copy(
-                        isShowingFavourites = event.isShowing
+                        isShowingFavourites = event.isShowing,
+                        isSearching = false
                     )
                 }
             }
@@ -175,6 +179,14 @@ class PlansViewModel (
                 _state.update {
                     it.copy(
                         isFavourite = event.isFavourite
+                    )
+                }
+            }
+
+            is Event.OnTypeUpdated -> {
+                _state.update {
+                    it.copy(
+                        type = event.type
                     )
                 }
             }

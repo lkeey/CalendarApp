@@ -119,6 +119,14 @@ fun CalendarScreen (
                                     textAlign = TextAlign.Center
                                 )
                             )
+
+                            Image (
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                painter = painterResource(id = R.drawable.ic_calendar_no_plans),
+                                contentDescription = "no plans",
+                                alignment = Alignment.Center
+                            )
                         }
 
                     } else {
@@ -159,7 +167,7 @@ fun CalendarScreen (
                     }
 
                     if (favouritesPlans.isEmpty()) {
-                        items(favouritesPlans) {
+                        item {
                             Image (
                                 modifier = Modifier
                                     .fillMaxWidth(),

@@ -4,6 +4,7 @@ import aleshka.developement.calendarapp.R
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -42,8 +43,7 @@ fun SearchTextField (
 
     OutlinedTextField(
         modifier = Modifier
-            .heightIn(max = 54.dp)
-            .wrapContentWidth(),
+            .wrapContentSize(),
     label = {
             Row {
                 Text(

@@ -102,7 +102,9 @@ fun CreatePlan (
                 SelectableText(
                     text = "Событие",
                     state = state,
-                    onTextClick = {}
+                    onTextClick = {
+                        onEvent(Event.OnTypeUpdated(it))
+                    }
                 )
 
                 Spacer(modifier = Modifier.width(12.dp))
@@ -110,7 +112,9 @@ fun CreatePlan (
                 SelectableText(
                     text = "Задача",
                     state = state,
-                    onTextClick = {}
+                    onTextClick = {
+                        onEvent(Event.OnTypeUpdated(it))
+                    }
                 )
             }
 
@@ -128,7 +132,7 @@ fun CreatePlan (
             ) {
                 Icon(
                     modifier = Modifier
-                        .padding(8.dp),
+                        .padding(12.dp),
                     painter = painterResource(id = R.drawable.ic_calendar_favourite),
                     contentDescription = "bookmark",
                     tint = if (state.isFavourite) Color(0xFFFFFFFF) else Color(0xFF757575),

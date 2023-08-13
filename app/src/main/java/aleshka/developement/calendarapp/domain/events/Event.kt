@@ -13,6 +13,7 @@ sealed interface Event {
     data class OnSubjectUpdated(val subject: String): Event
     data class OnColorUpdated(val color: String): Event
     data class OnSearchQueryUpdated(val searchQuery: String): Event
+    data class OnTypeUpdated(val type: String): Event
     data class OnFavouriteClick(val isFavourite: Boolean): Event
     data class OnFavouritesShowing(val isShowing: Boolean): Event
 }
