@@ -1,9 +1,11 @@
 package aleshka.developement.calendarapp.presentation.component
 
 import aleshka.developement.calendarapp.R
-import aleshka.developement.calendarapp.domain.events.Event
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
@@ -23,6 +25,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
@@ -39,11 +42,12 @@ fun SearchTextField (
 
     OutlinedTextField(
         modifier = Modifier
+            .heightIn(max = 54.dp)
             .wrapContentWidth(),
-        label = {
+    label = {
             Row {
                 Text(
-                    text = "Найти",
+                    text = "Найти...",
                     style = TextStyle(
                         fontSize = 16.sp,
                         fontFamily = FontFamily(Font(R.font.regular)),

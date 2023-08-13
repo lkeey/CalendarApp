@@ -72,6 +72,7 @@ class PlansViewModel (
                             date = state.value.date,
                             color = state.value.color,
                             subject = state.value.subject,
+                            isFavourite = state.value.isFavourite
                         )
 
                         viewModelScope.launch {
@@ -158,6 +159,22 @@ class PlansViewModel (
                 _state.update {
                     it.copy(
                         isSearching = false
+                    )
+                }
+            }
+
+            is Event.OnFavouritesShowing -> {
+                _state.update {
+                    it.copy(
+                        isShowingFavourites = event.isShowing
+                    )
+                }
+            }
+
+            is Event.OnFavouriteClick -> {
+                _state.update {
+                    it.copy(
+                        isFavourite = event.isFavourite
                     )
                 }
             }
