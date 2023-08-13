@@ -39,11 +39,15 @@ internal fun MonthViewCalendar(
 
     CalendarPager(
         loadedDates = loadedDates,
-        loadNextDates = { loadDatesForMonth(currentMonth) },
-        loadPrevDates = { loadDatesForMonth(currentMonth.minusMonths(2)) } // why 2
+        loadNextDates = {
+            loadDatesForMonth(currentMonth)
+        },
+        loadPrevDates = {
+            loadDatesForMonth(currentMonth.minusMonths(2))
+        }
     ) { currentPage ->
 
-        FlowRow (
+        FlowRow(
             modifier = Modifier
 
                 .wrapContentSize()
