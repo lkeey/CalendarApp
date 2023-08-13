@@ -9,6 +9,7 @@ import aleshka.developement.calendarapp.presentation.theme.CalendarAppTheme
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -58,7 +59,9 @@ fun CalendarScreen (
                 FloatingActionButton(
                     onClick = {
                         onEvent(Event.ShowCreatingSheet)
-                    }
+                    },
+                    containerColor = Color(0xFF3579F8),
+                    contentColor = Color.White
                 ) {
                     Icon(
                         imageVector = Icons.Default.Add,
@@ -70,7 +73,8 @@ fun CalendarScreen (
 
             LazyColumn(
                 modifier = Modifier
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .background(Color(0xFFF4F8FF)),
                 contentPadding = paddingValues,
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
@@ -88,11 +92,11 @@ fun CalendarScreen (
                     )
                 }
 
-
-            /*
-                isSearching
-            */
                 if (state.isSearching) {
+
+                    /*
+                        Searching
+                    */
 
                     val searchingPlans = state.plans.filter {
                         it.subject.contains(state.searchQuery, ignoreCase = true) ||
@@ -143,7 +147,61 @@ fun CalendarScreen (
                             }
                         }
                     }
-                } else {
+                } else if (state.isShowingFavourites) {
+
+                    /*
+                        Favourites
+                    */
+
+                    val favouritesPlans = state.plans.filter {
+                        it.subject.contains(state.searchQuery, ignoreCase = true) ||
+                                it.title.contains(state.searchQuery, ignoreCase = true)
+                    }
+
+                    if (favouritesPlans.isEmpty()) {
+                        items(favouritesPlans) {
+                            Image (
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                painter = painterResource(id = R.drawable.ic_calendar_no_plans),
+                                contentDescription = "no plans",
+                                alignment = Alignment.Center
+                            )
+                        }
+                    } else {
+//                        item {
+//                            Column (
+//                                modifier = Modifier
+//                                    .padding(horizontal = 16.dp)
+//                            ) {
+//                                favouritesPlans.forEach {
+//                                    PlanItem (
+//                                        item = it,
+//                                        onDelete = { plan ->
+//                                            onEvent(Event.DeletePlan(plan = plan))
+//                                        }
+//                                    )
+//                                }
+//                            }
+//                        }
+
+                        items(favouritesPlans) {
+                            favouritesPlans.forEach {
+                                PlanItem (
+                                    item = it,
+                                    onDelete = { plan ->
+                                        onEvent(Event.DeletePlan(plan = plan))
+                                    }
+                                )
+                            }
+                        }
+                    }
+
+                } else  {
+
+                    /*
+                        Chosen Day
+                    */
 
                     val currentPlans = state.plans.filter {
                         it.date == currentDate.value.toString()

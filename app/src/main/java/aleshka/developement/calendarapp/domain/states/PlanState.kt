@@ -9,9 +9,11 @@ data class PlanState (
     val date: String = "",
     val subject: String = "",
     val color: String = "",
+    val isFavourite: Boolean = false,
 
     val isAddingPlan: Boolean = false,
     var isSearching: Boolean = false,
+    val isShowingFavourites: Boolean = false,
 
     val searchQuery: String = ""
 )

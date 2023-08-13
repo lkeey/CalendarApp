@@ -13,4 +13,5 @@ data class PlanModel(
     val date: String,
     val subject: String,
     val color: String,
+    val isFavourite: Boolean,
 )

@@ -1,5 +1,6 @@
 package aleshka.developement.calendarapp.presentation.component
 
+import aleshka.developement.calendarapp.R
 import aleshka.developement.calendarapp.domain.events.Event
 import aleshka.developement.calendarapp.domain.states.PlanState
 import aleshka.developement.calendarapp.domain.view_models.CalendarViewModel
@@ -9,16 +10,17 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mabn.calendarlibrary.utils.getWeekStartDate
 import java.time.LocalDate
@@ -62,9 +64,10 @@ fun ExpandableCalendar(
            modifier = Modifier
                .fillMaxWidth()
                .padding(horizontal = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.Bottom
         ) {
+
             SearchTextField (
                 onClearFocus = {
                     onEvent(Event.CancelSearching)
@@ -74,101 +77,121 @@ fun ExpandableCalendar(
                 }
             )
 
+            Spacer(modifier = Modifier.width(4.dp))
+            
             Box (
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 4.dp)
+                    .heightIn(max = 46.dp)
                     .background(
-                        color = Color(0xFFBDB8B8),
+                        color = if (state.isShowingFavourites) Color(0xFF3579F8) else Color(0xFFFFFFFF),
                         shape = RoundedCornerShape(size = 8.dp)
                     )
-                    .padding(8.dp)
-            ) {
+                    .clickable {
+                        onEvent(Event.OnFavouritesShowing(!state.isShowingFavourites))
+                    },
+                ) {
                 Icon(
-                    imageVector = Icons.Default.FavoriteBorder,
-                    contentDescription = "bookmark"
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(8.dp),
+                    painter = painterResource(id = R.drawable.ic_calendar_favourite),
+                    contentDescription = "bookmark",
+                    tint = if (state.isShowingFavourites) Color(0xFFFFFFFF) else Color(0xFF757575),
                 )
             }
         }
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        /*
+        Column (
+            modifier = Modifier
+                .background(
+                    color = Color(0xFFFFFFFF),
+                    shape = RoundedCornerShape(
+                        size = 40.dp
+                    )
+                )
+                .zIndex(1f)
+        ) {
+
+            /*
             month & toggle
         */
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            MonthText(
-                selectedMonth = currentMonth.value
-            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                MonthText(
+                    selectedMonth = currentMonth.value
+                )
 
-            ToggleExpandCalendarButton(
-                isExpanded = calendarExpanded.value,
-                expand = {
-                    viewModel.onIntent(CalendarIntent.ExpandCalendar)
-                },
-                collapse = {
-                    viewModel.onIntent(CalendarIntent.CollapseCalendar)
-                },
-            )
-        }
+                ToggleExpandCalendarButton(
+                    isExpanded = calendarExpanded.value,
+                    expand = {
+                        viewModel.onIntent(CalendarIntent.ExpandCalendar)
+                    },
+                    collapse = {
+                        viewModel.onIntent(CalendarIntent.CollapseCalendar)
+                    },
+                )
+            }
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-        if (calendarExpanded.value && !state.isSearching) {
-            MonthViewCalendar(
-                loadedDates.value,
-                selectedDate.value,
-                currentMonth = currentMonth.value,
-                loadDatesForMonth = { yearMonth ->
-                    viewModel.onIntent(
-                        CalendarIntent.LoadNextDates(
-                            yearMonth.atDay(
-                                1
-                            ),
-                            period = Period.MONTH
+            if (calendarExpanded.value && !state.isSearching) {
+                MonthViewCalendar(
+                    loadedDates.value,
+                    selectedDate.value,
+                    currentMonth = currentMonth.value,
+                    loadDatesForMonth = { yearMonth ->
+                        viewModel.onIntent(
+                            CalendarIntent.LoadNextDates(
+                                yearMonth.atDay(
+                                    1
+                                ),
+                                period = Period.MONTH
+                            )
                         )
-                    )
-                },
-                onDayClick = {
-                    onEvent(Event.CancelSearching)
+                    },
+                    onDayClick = {
+                        onEvent(Event.CancelSearching)
 
-                    viewModel.onIntent(CalendarIntent.SelectDate(it))
-                    onDayClick(it)
-                },
-                state = state
-            )
+                        viewModel.onIntent(CalendarIntent.SelectDate(it))
+                        onDayClick(it)
+                    },
+                    state = state
+                )
 
-        } else {
-            InlineCalendar(
-                loadedDates.value,
-                selectedDate.value,
-                loadNextWeek = { nextWeekDate ->
-                    viewModel.onIntent(
-                        CalendarIntent.LoadNextDates(nextWeekDate)
-                    )
-                },
-                loadPrevWeek = { endWeekDate ->
-                    viewModel.onIntent(
-                        CalendarIntent.LoadNextDates(
-                            endWeekDate.minusDays(1).getWeekStartDate()
+            } else {
+                InlineCalendar(
+                    loadedDates.value,
+                    selectedDate.value,
+                    loadNextWeek = { nextWeekDate ->
+                        viewModel.onIntent(
+                            CalendarIntent.LoadNextDates(nextWeekDate)
                         )
-                    )
-                },
-                onDayClick = {
-                    onEvent(Event.CancelSearching)
+                    },
+                    loadPrevWeek = { endWeekDate ->
+                        viewModel.onIntent(
+                            CalendarIntent.LoadNextDates(
+                                endWeekDate.minusDays(1).getWeekStartDate()
+                            )
+                        )
+                    },
+                    onDayClick = {
+                        onEvent(Event.CancelSearching)
 
-                    viewModel.onIntent(CalendarIntent.SelectDate(it))
-                    onDayClick(it)
-                },
-                state = state,
-                currentMonth = currentMonth.value,
-            )
+                        viewModel.onIntent(CalendarIntent.SelectDate(it))
+                        onDayClick(it)
+                    },
+                    state = state,
+                    currentMonth = currentMonth.value,
+                )
+            }
         }
     }
 }
