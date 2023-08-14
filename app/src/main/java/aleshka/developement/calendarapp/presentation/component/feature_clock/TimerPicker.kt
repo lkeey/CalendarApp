@@ -111,10 +111,14 @@ fun TimerPicker(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        Row(
+        Row (
+            modifier = Modifier
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             TimeCard(
+                modifier = Modifier
+                    .weight(0.25f),
                 time = selectedHour,
                 isSelected = selectedPart == TimePart.StartHour,
                 onClick = { selectedPart = TimePart.StartHour }
@@ -128,6 +132,8 @@ fun TimerPicker(
             )
 
             TimeCard(
+                modifier = Modifier
+                    .weight(0.25f),
                 time = selectedMinute,
                 isSelected = selectedPart == TimePart.StartMinute,
                 onClick = {
@@ -143,6 +149,8 @@ fun TimerPicker(
             )
 
             TimeCard(
+                modifier = Modifier
+                    .weight(0.25f),
                 time = selectedEndHour,
                 isSelected = selectedPart == TimePart.EndHour,
                 onClick = { selectedPart = TimePart.EndHour }
@@ -156,6 +164,8 @@ fun TimerPicker(
             )
 
             TimeCard(
+                modifier = Modifier
+                    .weight(0.25f),
                 time = selectedEndMinute,
                 isSelected = selectedPart == TimePart.EndMinute,
                 onClick = {
