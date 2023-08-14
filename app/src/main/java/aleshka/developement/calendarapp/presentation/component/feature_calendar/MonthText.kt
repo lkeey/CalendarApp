@@ -1,4 +1,4 @@
-package aleshka.developement.calendarapp.presentation.component
+package aleshka.developement.calendarapp.presentation.component.feature_calendar
 
 import aleshka.developement.calendarapp.R
 import android.os.Build

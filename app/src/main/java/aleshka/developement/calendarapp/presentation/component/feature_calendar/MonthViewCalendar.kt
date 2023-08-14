@@ -1,4 +1,4 @@
-package aleshka.developement.calendarapp.presentation.component
+package aleshka.developement.calendarapp.presentation.component.feature_calendar
 
 import aleshka.developement.calendarapp.domain.states.PlanState
 import aleshka.developement.calendarapp.utils.dayViewModifier
@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
@@ -15,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import com.mabn.calendarlibrary.component.CalendarPager
 import java.time.LocalDate
 import java.time.YearMonth
 
@@ -45,28 +45,8 @@ internal fun MonthViewCalendar(
 
         FlowRow(
             modifier = Modifier
-
+                .fillMaxWidth()
                 .wrapContentSize()
-//                .background(
-//                    color = Color(0xFFFFFFFF),
-//                    shape = RoundedCornerShape(
-//                        bottomEnd = 40.dp,
-//                        bottomStart = 40.dp
-//                    )
-//                )
-//                .background(
-//                    brush = Brush.verticalGradient(
-//                        colors = listOf(
-//                            Color.Transparent,
-//                            Color.Black.copy(alpha = .15f),
-//                        )
-//                    ),
-//                    shape = RoundedCornerShape(
-//                        bottomEnd = 40.dp,
-//                        bottomStart = 40.dp
-//                    )
-//                )
-//                .zIndex(1f)
         ) {
             loadedDates[currentPage].forEachIndexed { index, date ->
 

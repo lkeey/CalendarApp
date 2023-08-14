@@ -1,14 +1,8 @@
-package aleshka.developement.calendarapp.presentation.sheets
+package aleshka.developement.calendarapp.presentation.component.feature_create
 
 import aleshka.developement.calendarapp.R
 import aleshka.developement.calendarapp.domain.events.Event
 import aleshka.developement.calendarapp.domain.states.PlanState
-import aleshka.developement.calendarapp.presentation.component.CalendarInput
-import aleshka.developement.calendarapp.presentation.component.ColorsBox
-import aleshka.developement.calendarapp.presentation.component.FilledBtn
-import aleshka.developement.calendarapp.presentation.component.ListDropDown
-import aleshka.developement.calendarapp.presentation.component.OutlinedText
-import aleshka.developement.calendarapp.presentation.component.SelectableText
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -52,6 +46,9 @@ fun CreatePlan (
             .wrapContentHeight()
             .padding(vertical = 18.dp, horizontal = 32.dp)
     ) {
+
+        // Top Bar
+
         Row (
             modifier  = Modifier
                 .fillMaxWidth(),
@@ -82,6 +79,8 @@ fun CreatePlan (
         
         Spacer(modifier = Modifier.height(8.dp))
 
+        // Name
+
         OutlinedText(
             label = "Название",
             onTextChanged = {
@@ -90,6 +89,8 @@ fun CreatePlan (
         )
 
         Spacer(modifier = Modifier.height(8.dp))
+
+        // Type
 
         Row (
             modifier = Modifier
@@ -118,6 +119,8 @@ fun CreatePlan (
                 )
             }
 
+            // Bookmark
+
             Box (
                 modifier = Modifier
                     .heightIn(max = 46.dp)
@@ -142,6 +145,8 @@ fun CreatePlan (
 
         Spacer(modifier = Modifier.height(8.dp))
 
+        // Data
+
         CalendarInput(
             label = "Дата",
             onTextChanged = {
@@ -150,6 +155,8 @@ fun CreatePlan (
         )
 
         Spacer(modifier = Modifier.height(8.dp))
+
+        // Subject
 
         val subjects = listOf(
             "Астрономия",
@@ -170,6 +177,8 @@ fun CreatePlan (
         }
         
         Spacer(modifier = Modifier.height(12.dp))
+
+        // Color
 
         val colorsHex = listOf(
             "#FF7E50FF",

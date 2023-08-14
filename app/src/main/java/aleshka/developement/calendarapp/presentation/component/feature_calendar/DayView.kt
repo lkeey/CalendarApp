@@ -1,4 +1,4 @@
-package aleshka.developement.calendarapp.presentation.component
+package aleshka.developement.calendarapp.presentation.component.feature_calendar
 
 import aleshka.developement.calendarapp.domain.states.PlanState
 import android.os.Build
@@ -103,6 +103,7 @@ fun DayView(
                     fontWeight = FontWeight(400),
                     color = Color(0xFF222222),
                     letterSpacing = 0.2.sp,
+                    textAlign = TextAlign.Center
                 )
             )
         }

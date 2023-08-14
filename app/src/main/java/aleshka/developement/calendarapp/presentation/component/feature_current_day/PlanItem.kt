@@ -1,4 +1,4 @@
-package aleshka.developement.calendarapp.presentation.component
+package aleshka.developement.calendarapp.presentation.component.feature_current_day
 
 import aleshka.developement.calendarapp.R
 import aleshka.developement.calendarapp.data.models.PlanModel

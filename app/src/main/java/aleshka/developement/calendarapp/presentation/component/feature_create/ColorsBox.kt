@@ -1,6 +1,5 @@
-package aleshka.developement.calendarapp.presentation.component
+package aleshka.developement.calendarapp.presentation.component.feature_create
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -36,16 +35,13 @@ fun ColorsBox (
             .fillMaxWidth()
     ) {
         colorsHex.forEach { hex->
-            try {
-                val color = Color(hex.toColorInt())
-            } catch (ex: Exception) {
-                Log.i("ViewModelPlans", "ex - ${ex.message}")
-            }
 
             Box (
                 modifier = Modifier
                     .padding(horizontal = 8.dp)
-                    .size(28.dp)
+                    .size(
+                        if (chosenColorHex == hex) 30.dp else 28.dp
+                    )
                     .clickable {
                         chosenColorHex = hex
                         onValueChanged(hex)

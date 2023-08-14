@@ -1,4 +1,4 @@
-package com.mabn.calendarlibrary.component
+package aleshka.developement.calendarapp.presentation.component.feature_calendar
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.pager.HorizontalPager

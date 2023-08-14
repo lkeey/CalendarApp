@@ -1,4 +1,4 @@
-package aleshka.developement.calendarapp.presentation.component
+package aleshka.developement.calendarapp.presentation.component.feature_create
 
 import aleshka.developement.calendarapp.R
 import aleshka.developement.calendarapp.domain.states.PlanState

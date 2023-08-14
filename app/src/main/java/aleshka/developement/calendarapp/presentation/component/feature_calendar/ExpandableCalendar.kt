@@ -1,9 +1,10 @@
-package aleshka.developement.calendarapp.presentation.component
+package aleshka.developement.calendarapp.presentation.component.feature_calendar
 
 import aleshka.developement.calendarapp.R
 import aleshka.developement.calendarapp.domain.events.Event
 import aleshka.developement.calendarapp.domain.states.PlanState
 import aleshka.developement.calendarapp.domain.view_models.CalendarViewModel
+import aleshka.developement.calendarapp.presentation.component.feature_searching.SearchTextField
 import aleshka.developement.calendarapp.presentation.core.CalendarIntent
 import aleshka.developement.calendarapp.presentation.core.Period
 import android.os.Build
@@ -69,6 +70,7 @@ fun ExpandableCalendar(
         ) {
 
             SearchTextField (
+                state = state,
                 onClearFocus = {
                     onEvent(Event.CancelSearching)
                 },
@@ -94,7 +96,7 @@ fun ExpandableCalendar(
                 Icon(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(8.dp),
+                        .padding(12.dp),
                     painter = painterResource(id = R.drawable.ic_calendar_favourite),
                     contentDescription = "bookmark",
                     tint = if (state.isShowingFavourites) Color(0xFFFFFFFF) else Color(0xFF757575),
@@ -106,6 +108,11 @@ fun ExpandableCalendar(
 
         Column (
             modifier = Modifier
+                .clickable(
+                    onClick = {
+                        onEvent(Event.CancelSearching)
+                    }
+                )
                 .background(
                     color = Color(0xFFFFFFFF),
                     shape = RoundedCornerShape(

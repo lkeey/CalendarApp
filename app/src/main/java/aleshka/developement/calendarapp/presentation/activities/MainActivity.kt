@@ -2,6 +2,7 @@ package aleshka.developement.calendarapp.presentation.activities
 
 import aleshka.developement.calendarapp.domain.view_models.PlansViewModel
 import aleshka.developement.calendarapp.presentation.screens.MainScreen
+import aleshka.developement.calendarapp.presentation.theme.CalendarAppTheme
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -21,10 +22,12 @@ class MainActivity : ComponentActivity() {
             val viewModel = getViewModel<PlansViewModel>()
             val state by viewModel.state.collectAsState()
 
-            MainScreen(
-                state = state,
-                onEvent = viewModel::onEvent
-            )
+            CalendarAppTheme {
+                MainScreen(
+                    state = state,
+                    onEvent = viewModel::onEvent
+                )
+            }
         }
     }
 }

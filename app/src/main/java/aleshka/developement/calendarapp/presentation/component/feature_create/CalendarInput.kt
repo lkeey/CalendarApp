@@ -1,4 +1,4 @@
-package aleshka.developement.calendarapp.presentation.component
+package aleshka.developement.calendarapp.presentation.component.feature_create
 
 import aleshka.developement.calendarapp.R
 import androidx.compose.foundation.clickable
@@ -73,10 +73,6 @@ fun CalendarInput(
             },
         trailingIcon = @Composable {
             Icon(
-                modifier = Modifier
-                    .clickable {
-                        calendarState.show()
-                    },
                 imageVector = Icons.Default.DateRange,
                 contentDescription = "calendar view"
             )
