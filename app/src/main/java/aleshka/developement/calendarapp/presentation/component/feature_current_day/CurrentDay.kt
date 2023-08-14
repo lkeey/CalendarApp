@@ -38,59 +38,26 @@ fun CurrentDay (
         it.date == currentDate.value.toString()
     }
 
-    Row (
-        modifier = Modifier
-            .fillMaxWidth()
-    ) {
+    Column {
+        if (currentPlans.isEmpty()) {
 
-        Column (
-            modifier = Modifier
-                .padding(horizontal = 16.dp)
-        ) {
-            Text(
-                text = currentDate.value.dayOfMonth.toString(),
-                style = TextStyle(
-                    fontSize = 32.sp,
-                    fontFamily = FontFamily(Font(R.font.bold)),
-                    fontWeight = FontWeight(500),
-                    color = Color(0xFF000000),
-                    letterSpacing = 0.24.sp,
-                    textAlign = TextAlign.Center
-                )
+            Image (
+                modifier = Modifier
+                    .fillMaxWidth(),
+                painter = painterResource(id = R.drawable.ic_calendar_no_plans),
+                contentDescription = "no plans",
+                alignment = Alignment.Center
             )
 
-            Text(
-                text = currentDate.value.dayOfWeek.toString(),
-                style = TextStyle(
-                    fontSize = 16.sp,
-                    fontFamily = FontFamily(Font(R.font.medium)),
-                    fontWeight = FontWeight(500),
-                    color = Color(0xFF000000),
-                    letterSpacing = 0.24.sp,
-                )
-            )
-        }
-
-        Column {
-            if (currentPlans.isEmpty()) {
-
-                Image (
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    painter = painterResource(id = R.drawable.ic_calendar_no_plans),
-                    contentDescription = "no plans",
-                    alignment = Alignment.Center
-                )
-
-            } else {
-                currentPlans.forEach {
-                    PlanItem(
-                        item = it
-                    ) { plan->
-                        onEvent(Event.DeletePlan(plan))
-                    }
+        } else {
+            currentPlans.forEach {
+                PlanItem(
+                    item = it
+                ) { plan->
+                    onEvent(Event.DeletePlan(plan))
                 }
             }
         }
     }
+
 }
