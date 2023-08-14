@@ -61,11 +61,24 @@ fun PlanItem  (
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = item.date,
+                text = "${item.startTime} - ${item.endTime}",
                 style = TextStyle(
-                    fontSize = 12.sp,
+                    fontSize = 16.sp,
                     fontFamily = FontFamily(Font(R.font.medium)),
                     fontWeight = FontWeight(600),
+                    color = Color(0xFFFFFFFF),
+                    letterSpacing = 0.24.sp,
+                )
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = item.date,
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    fontFamily = FontFamily(Font(R.font.regular)),
+                    fontWeight = FontWeight(500),
                     color = Color(0xFFFFFFFF),
                     letterSpacing = 0.24.sp,
                 )
