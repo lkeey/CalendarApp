@@ -3,7 +3,9 @@ package aleshka.developement.calendarapp.presentation.component.feature_create
 import aleshka.developement.calendarapp.R
 import aleshka.developement.calendarapp.domain.events.Event
 import aleshka.developement.calendarapp.domain.states.PlanState
+import aleshka.developement.calendarapp.presentation.component.feature_clock.TimerPicker
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,13 +20,16 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -35,24 +40,27 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun CreatePlan (
+fun CreatePlan(
     state: PlanState,
     onEvent: (Event) -> Unit
 ) {
 
-    Column (
+    val scroll = rememberScrollState()
+
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
+            .verticalScroll(scroll)
             .padding(vertical = 18.dp, horizontal = 32.dp)
     ) {
 
         // Top Bar
 
-        Row (
-            modifier  = Modifier
+        Row(
+            modifier = Modifier
                 .fillMaxWidth(),
-          horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
 
             Text(
@@ -67,7 +75,7 @@ fun CreatePlan (
                 )
             )
 
-            Image (
+            Image(
                 painter = painterResource(id = R.drawable.ic_profile_cancel),
                 contentDescription = "close",
                 modifier = Modifier
@@ -76,7 +84,7 @@ fun CreatePlan (
                     }
             )
         }
-        
+
         Spacer(modifier = Modifier.height(8.dp))
 
         // Name
@@ -92,7 +100,7 @@ fun CreatePlan (
 
         // Type
 
-        Row (
+        Row(
             modifier = Modifier
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -109,7 +117,7 @@ fun CreatePlan (
                 )
 
                 Spacer(modifier = Modifier.width(12.dp))
-                
+
                 SelectableText(
                     text = "Задача",
                     state = state,
@@ -121,7 +129,7 @@ fun CreatePlan (
 
             // Bookmark
 
-            Box (
+            Box(
                 modifier = Modifier
                     .heightIn(max = 46.dp)
                     .background(
@@ -132,7 +140,7 @@ fun CreatePlan (
                         onEvent(Event.OnFavouriteClick(!state.isFavourite))
                     },
 
-            ) {
+                ) {
                 Icon(
                     modifier = Modifier
                         .padding(12.dp),
@@ -146,12 +154,19 @@ fun CreatePlan (
         Spacer(modifier = Modifier.height(8.dp))
 
         // Data
-
         CalendarInput(
             label = "Дата",
             onTextChanged = {
                 onEvent(Event.OnDateUpdated(it))
             }
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        val context = LocalContext.current
+
+        TimerPicker(
+            onOk = { Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show() },
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -175,7 +190,7 @@ fun CreatePlan (
 
             onEvent(Event.OnSubjectUpdated(it))
         }
-        
+
         Spacer(modifier = Modifier.height(12.dp))
 
         // Color
@@ -188,7 +203,7 @@ fun CreatePlan (
             "#FF000000",
         )
 
-        ColorsBox (
+        ColorsBox(
             colorsHex = colorsHex
         ) {
             onEvent(Event.OnColorUpdated(it))

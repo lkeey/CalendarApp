@@ -1,4 +1,4 @@
-package aleshka.developement.calendarapp.utils
+package aleshka.developement.calendarapp.domain.utils
 
 object Status {
     const val SUCCESS = 0

@@ -75,6 +75,9 @@ fun ExpandableCalendar(
                     onEvent(Event.CancelSearching)
                 },
                 onTextChanged = {
+
+                    viewModel.onIntent(CalendarIntent.CollapseCalendar)
+
                     onEvent(Event.OnSearchQueryUpdated(it))
                 }
             )
@@ -149,7 +152,7 @@ fun ExpandableCalendar(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            if (calendarExpanded.value && !state.isSearching) {
+            if (calendarExpanded.value) {
                 MonthViewCalendar(
                     loadedDates.value,
                     selectedDate.value,

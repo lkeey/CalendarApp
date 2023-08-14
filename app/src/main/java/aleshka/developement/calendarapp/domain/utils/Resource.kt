@@ -1,4 +1,4 @@
-package aleshka.developement.calendarapp.utils
+package aleshka.developement.calendarapp.domain.utils
 
 sealed class Resource<T> (
     val data: T? = null,

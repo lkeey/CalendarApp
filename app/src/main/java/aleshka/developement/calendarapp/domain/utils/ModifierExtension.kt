@@ -1,4 +1,4 @@
-package aleshka.developement.calendarapp.utils
+package aleshka.developement.calendarapp.domain.utils
 
 import android.os.Build
 import androidx.annotation.RequiresApi

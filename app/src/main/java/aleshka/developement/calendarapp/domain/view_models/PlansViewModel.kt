@@ -5,7 +5,7 @@ import aleshka.developement.calendarapp.data.models.PlanModel
 import aleshka.developement.calendarapp.domain.events.Event
 import aleshka.developement.calendarapp.domain.repositories.PlansRepository
 import aleshka.developement.calendarapp.domain.states.PlanState
-import aleshka.developement.calendarapp.utils.Status
+import aleshka.developement.calendarapp.domain.utils.Status
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel

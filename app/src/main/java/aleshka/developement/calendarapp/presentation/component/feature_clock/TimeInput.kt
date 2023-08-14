@@ -1,17 +1,14 @@
-package aleshka.developement.calendarapp.presentation.component.feature_create
+package aleshka.developement.calendarapp.presentation.component.feature_clock
 
 import aleshka.developement.calendarapp.R
+import android.app.TimePickerDialog
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -19,7 +16,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -27,54 +25,41 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.maxkeppeker.sheets.core.models.base.rememberSheetState
-import com.maxkeppeler.sheets.calendar.CalendarDialog
-import com.maxkeppeler.sheets.calendar.models.CalendarConfig
-import com.maxkeppeler.sheets.calendar.models.CalendarSelection
-import com.maxkeppeler.sheets.calendar.models.CalendarStyle
+import java.util.Calendar
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CalendarInput(
+fun TimeInput(
     modifier: Modifier = Modifier,
     label: String,
     onTextChanged: (String) -> Unit
 ) {
 
-    val calendarState = rememberSheetState()
-
     val textValue = remember {
         mutableStateOf("")
     }
 
-    CalendarDialog(
-        state = calendarState,
-        selection = CalendarSelection.Date {
-//            val objects = it.toString().split("-")
-//
-//            textValue.value = "${objects[2]}.${objects[1]}.${objects[0]}"
+    val calendar = Calendar.getInstance()
+    val hour = calendar[Calendar.HOUR_OF_DAY]
+    val minute = calendar[Calendar.MINUTE]
+    val context = LocalContext.current
 
-            textValue.value = it.toString()
-
-            onTextChanged(textValue.value)
-        },
-        config = CalendarConfig (
-            monthSelection = true,
-            yearSelection = true,
-            style = CalendarStyle.MONTH
-        ),
+    val time = remember { mutableStateOf("") }
+    val timePickerDialog = TimePickerDialog(
+        context,
+        {_, hour : Int, minute: Int ->
+            time.value = "$hour:$minute"
+        }, hour, minute, false
     )
 
     OutlinedTextField(
         modifier = modifier
-            .fillMaxWidth()
             .clip(RoundedCornerShape(4.dp))
             .clickable {
-                calendarState.show()
+                timePickerDialog.show()
             },
         trailingIcon = @Composable {
             Icon(
-                imageVector = Icons.Default.DateRange,
+                painter = painterResource(id = R.drawable.ic_calendar_time),
                 contentDescription = "calendar view"
             )
         },
@@ -96,7 +81,7 @@ fun CalendarInput(
             focusedBorderColor = Color(0xFF3579F8),
             focusedLabelColor = Color(0xFF3579F8),
             cursorColor = Color(0xFF3579F8),
-            backgroundColor = White
+            backgroundColor = Color.White
         ),
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Next

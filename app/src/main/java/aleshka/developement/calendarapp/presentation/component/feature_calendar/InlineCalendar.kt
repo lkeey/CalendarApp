@@ -1,7 +1,7 @@
 package aleshka.developement.calendarapp.presentation.component.feature_calendar
 
 import aleshka.developement.calendarapp.domain.states.PlanState
-import aleshka.developement.calendarapp.utils.dayViewModifier
+import aleshka.developement.calendarapp.domain.utils.dayViewModifier
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
