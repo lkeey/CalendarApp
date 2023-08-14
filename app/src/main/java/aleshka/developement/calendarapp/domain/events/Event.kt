@@ -14,6 +14,14 @@ sealed interface Event {
     data class OnColorUpdated(val color: String): Event
     data class OnSearchQueryUpdated(val searchQuery: String): Event
     data class OnTypeUpdated(val type: String): Event
+    data class OnStartTimeUpdated(
+        val startHour: Int,
+        val startMin: Int,
+    ): Event
+    data class OnEndTimeUpdated(
+        val endHour: Int,
+        val endMin: Int,
+    ): Event
     data class OnFavouriteClick(val isFavourite: Boolean): Event
     data class OnFavouritesShowing(val isShowing: Boolean): Event
 }

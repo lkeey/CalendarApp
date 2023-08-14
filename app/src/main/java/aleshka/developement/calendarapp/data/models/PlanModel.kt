@@ -14,5 +14,7 @@ data class PlanModel(
     val subject: String,
     val color: String,
     val type: String,
+    val startTime: String,
+    val endTime: String,
     val isFavourite: Boolean,
 )

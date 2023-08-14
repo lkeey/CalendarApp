@@ -5,7 +5,6 @@ import aleshka.developement.calendarapp.domain.events.Event
 import aleshka.developement.calendarapp.domain.states.PlanState
 import aleshka.developement.calendarapp.presentation.component.feature_clock.TimerPicker
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -29,7 +28,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -163,10 +161,9 @@ fun CreatePlan(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        val context = LocalContext.current
-
         TimerPicker(
-            onOk = { Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show() },
+            state = state,
+            onEvent = onEvent
         )
 
         Spacer(modifier = Modifier.height(8.dp))

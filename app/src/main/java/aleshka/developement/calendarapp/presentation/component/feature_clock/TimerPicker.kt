@@ -1,8 +1,9 @@
 package aleshka.developement.calendarapp.presentation.component.feature_clock
 
 import aleshka.developement.calendarapp.R
+import aleshka.developement.calendarapp.domain.events.Event
+import aleshka.developement.calendarapp.domain.states.PlanState
 import aleshka.developement.calendarapp.domain.utils.ClockMarks24h
-import aleshka.developement.calendarapp.domain.utils.Time
 import aleshka.developement.calendarapp.domain.utils.TimePart
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -32,23 +33,24 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun TimerPicker(
-    onOk: (Time) -> Unit
+    state: PlanState,
+    onEvent: (Event) -> Unit
 ) {
     var selectedPart by remember {
         mutableStateOf(TimePart.StartHour)
     }
 
     var selectedHour by remember {
-        mutableStateOf(0)
+        mutableStateOf(state.startHour)
     }
     var selectedMinute by remember {
-        mutableStateOf(0)
+        mutableStateOf(state.startMinute)
     }
     var selectedEndHour by remember {
-        mutableStateOf(0)
+        mutableStateOf(state.endHour)
     }
     var selectedEndMinute by remember {
-        mutableStateOf(0)
+        mutableStateOf(state.endMinute)
     }
 
     val selectedTime by remember {
@@ -65,10 +67,22 @@ fun TimerPicker(
     val onTime: (Int) -> Unit = remember {
         {
             when (selectedPart) {
-                TimePart.StartHour -> selectedHour = it
-                TimePart.StartMinute -> selectedMinute = it * 5
-                TimePart.EndHour -> selectedEndHour = it
-                TimePart.EndMinute -> selectedEndMinute = it * 5
+                TimePart.StartHour -> {
+                    selectedHour = it
+                    onEvent(Event.OnStartTimeUpdated(selectedHour, selectedMinute))
+                }
+                TimePart.StartMinute -> {
+                    selectedMinute = it * 5
+                    onEvent(Event.OnStartTimeUpdated(selectedHour, selectedMinute))
+                }
+                TimePart.EndHour -> {
+                    selectedEndHour = it
+                    onEvent(Event.OnEndTimeUpdated(selectedEndHour, selectedEndMinute))
+                }
+                TimePart.EndMinute -> {
+                    selectedEndMinute = it * 5
+                    onEvent(Event.OnEndTimeUpdated(selectedEndHour, selectedEndMinute))
+                }
             }
         }
     }

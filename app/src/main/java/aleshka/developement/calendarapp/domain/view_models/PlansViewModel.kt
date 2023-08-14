@@ -74,6 +74,8 @@ class PlansViewModel (
                             subject = state.value.subject,
                             type = state.value.type,
                             isFavourite = state.value.isFavourite,
+                            startTime = "${state.value.startHour}:${state.value.startMinute}",
+                            endTime = "${state.value.endHour}:${state.value.endMinute}",
                         )
 
                         viewModelScope.launch {
@@ -187,6 +189,24 @@ class PlansViewModel (
                 _state.update {
                     it.copy(
                         type = event.type
+                    )
+                }
+            }
+
+            is Event.OnEndTimeUpdated -> {
+                _state.update {
+                    it.copy(
+                        endHour = event.endHour,
+                        endMinute = event.endMin
+                    )
+                }
+            }
+
+            is Event.OnStartTimeUpdated -> {
+                _state.update {
+                    it.copy(
+                        startHour = event.startHour,
+                        startMinute = event.startMin
                     )
                 }
             }

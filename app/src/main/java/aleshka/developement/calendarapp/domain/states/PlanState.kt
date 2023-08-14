@@ -12,6 +12,11 @@ data class PlanState (
     val type: String = "Событие",
     val isFavourite: Boolean = false,
 
+    val startHour: Int = 0,
+    val startMinute: Int = 0,
+    val endHour: Int = 0,
+    val endMinute: Int = 0,
+
     val isAddingPlan: Boolean = false,
     var isSearching: Boolean = false,
     val isShowingFavourites: Boolean = false,
